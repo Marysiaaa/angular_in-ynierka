@@ -1,0 +1,51 @@
+<div class="my-account-container" *ngIf="user">
+
+  <div class="user-card">
+    <div class="avatar">
+      <img src="graphics/ikona.png" alt="User icon" class="avatar">
+    </div>
+
+    <div class="user-name">
+      {{ user.name}} {{ user.surname }}
+    </div>
+
+    <div class="user-info-box">
+
+      <div class="info-row">
+        <span class="label">ID:</span>
+        <span class="value">{{ user.id }}</span>
+      </div>
+
+      <div *ngIf="user.sponsorDetails" class="info-row">
+        <span class="label">Sponsor:</span>
+        <span class="value">{{ user.sponsorDetails.name }} {{user.sponsorDetails.surname}}</span>
+      </div>
+
+      <div *ngIf="user.role" class="info-row">
+        <span class="label">Posiadana ranga:</span>
+        <span class="value"><em>{{ user.role.name}}</em></span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Data rejestracji:</span>
+        <span class="value"><strong>{{ user.registrationDate | date:'dd.MM.yyyy' }}</strong></span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="invite-text">
+    Użyj swojego linku partnerskiego do zapraszania przyjaciół, klientów i partnerów.
+  </p>
+
+  <div class="ref-box">
+    <input type="text" class="ref-link-input" [value]="referralLink" readonly>
+    <button class="copy-btn" (click)="copyReferralLink()">Kopiuj link</button>
+  </div>
+
+  <div *ngIf="showPopup" class="toast">
+    Twój link został skopiowany!
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+</div>

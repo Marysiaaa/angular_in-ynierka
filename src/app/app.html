@@ -1,0 +1,12 @@
+<div class="app" *cpIfAuthenticated="true">
+  <cp-header/>
+  <main class="content-wrapper">
+    <div class="router-outlet-wrapper">
+      <router-outlet/>
+    </div>
+  </main>
+</div>
+
+<div class="login-container" *cpIfAuthenticated="false">
+  <app-login />
+</div>

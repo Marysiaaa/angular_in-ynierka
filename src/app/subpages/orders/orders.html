@@ -1,0 +1,75 @@
+<h1>Wszystkie zamówienia</h1>
+
+<div class="orders-wrapper">
+  <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
+    <ng-container matColumnDef="OrderId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Zamówienia</th>
+      <td mat-cell *matCellDef="let element">{{ element.orderId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="UserId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Użytkownika</th>
+      <td mat-cell *matCellDef="let element">{{ element.userId }}</td>
+    </ng-container>
+    <ng-container matColumnDef="OrderDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data rejestracji zamówienia</th>
+      <td mat-cell *matCellDef="let element">{{ element.orderDate | date:'dd.MM.yyyy HH:mm' }}</td>
+    </ng-container>
+    <ng-container matColumnDef="TotalAmount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kwota</th>
+      <td mat-cell *matCellDef="let element">{{ element.totalAmount}}</td>
+    </ng-container>
+    <ng-container matColumnDef="StatusOrder">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
+      <td mat-cell *matCellDef="let element">
+    <span class="status"
+          [ngClass]="{
+            'in-progress': element.statusOrder === StatusOrder.InProgress,
+            'delivered': element.statusOrder === StatusOrder.Delivered,
+            'canceled':element.statusOrder===StatusOrder.Canceled,
+            'paid':element.statusOrder===StatusOrder.PAID,
+             'shipped':element.statusOrder===StatusOrder.Shipped
+
+          }">
+      {{ element.statusOrder | statusOrder }}
+    </span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="ShippOrder">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="pay-btn" (click)="shippOrder(row)">
+          Wyslij zamówienie
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CancelOrder">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="cancel-btn" (click)="cancelOrder(row)">
+          Anuluj zamówienie
+        </button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="DeliverOrder">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="deliver-btn" (click)="deliverOrder(row)">
+          Dostarcz zamówienie
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+
+
+  <div *ngIf="showPopup" class="toast success">
+    {{ message }}
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+ </div>
