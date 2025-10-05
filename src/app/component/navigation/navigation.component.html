@@ -1,0 +1,98 @@
+<nav class="navigation">
+  <ul class="navigation__links">
+    <li>
+      <a [routerLink]="RoutePath.HOME" class="link">
+        <div class="link__name">Home</div>
+      </a>
+    </li>
+
+    <li>
+      <a [routerLink]="RoutePath.ABOUT_US" class="link">
+        <div class="link__name">O nas</div>
+      </a>
+    </li>
+
+    <li class="dropdown">
+      <a [routerLink]="RoutePath.ROZLICZENIA" class="link">
+        <div class="link__name">Rozliczenia</div>
+      </a>
+      <ul class="dropdown__menu">
+        <li>
+          <a [routerLink]="RoutePath.WALLET" class="dropdown__item">
+            <span>Portfel</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="RoutePath.MY_ORDERS" class="dropdown__item">
+            <span>Moje zamówienia</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="RoutePath.CLIENTS_ORDERS" class="dropdown__item">
+            <span>Zamówienia klientów</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+
+    <li class="dropdown">
+      <a [routerLink]="RoutePath.STRUKTURA" class="link">
+        <div class="link__name">Struktura</div>
+      </a>
+      <ul class="dropdown__menu">
+        <li>
+          <a [routerLink]="RoutePath.PERSON" class="dropdown__item">
+            <span>Lista osób</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+    <li class="dropdown">
+      <a [routerLink]="RoutePath.MY_ACCOUNT" class="link">
+        <div class="link__name">Moje konto</div>
+      </a>
+      <ul class="dropdown__menu">
+
+        <a [routerLink]="RoutePath.HOME" class="link">
+          <div class="link__name">
+            <button *cpIfAuthenticated="true" (click)="onLogoutClick()" mat-raised-button class="logout-btn">Wyloguj
+            </button>
+          </div>
+        </a>
+
+      </ul>
+    </li>
+
+    <li *ngIf="isAdmin()" class="dropdown">
+      <a [routerLink]="RoutePath.HOME" class="link">
+        <div class="link__name">Panel administratora</div>
+      </a>
+
+      <ul class="dropdown__menu">
+        <li>
+          <a [routerLink]="RoutePath.ORDERS" class="dropdown__item">
+            <span>Zamówienia</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="RoutePath.PRODUCTS" class="dropdown__item">
+            <span>Produkty</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="RoutePath.ALLUSERS" class="dropdown__item">
+            <span>Użytkownicy</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a [routerLink]="RoutePath.BASKET" class="link link--icon">
+        <mat-icon aria-label="Koszyk">shopping_cart</mat-icon>
+      </a>
+    </li>
+
+  </ul>
+</nav>

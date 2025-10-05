@@ -1,0 +1,42 @@
+<div class="home-wrapper">
+  <div class="baner">
+    <img src="graphics/baner.png" alt="Belle Rosse Perfume Shop" class="baner">
+  </div>
+
+  <div class="tabs">
+    <button [class.active]="selectedTab === 'dlaNiej'" (click)="changeTab('dlaNiej')">
+      Dla niej
+    </button>
+
+    <button [class.active]="selectedTab === 'dlaNiego'" (click)="changeTab('dlaNiego')">
+      Dla niego
+    </button>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let p of filteredProducts">
+
+      <img
+        [src]="selectedTab === 'dlaNiej' ? 'graphics/perfumy-damskie.png' : 'graphics/perfumy-meskie.png'"
+        alt="{{ p.nameProduct }}">
+
+      <h3>{{ p.nameProduct }}</h3>
+
+      <p>Cena: {{ p.priceProduct }} zł</p>
+
+      <button class="buy-btn" (click)="buy(p)">Kup teraz
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showPopup" class="toast">
+    Produkt został dodany do koszyka!
+    <button (click)="closePopup()">Zamknij</button>
+    <button (click)="goToBasket()">Idź do koszyka</button>
+  </div>
+  <div *ngIf="showInaccessible" class="toast">
+    Produkt aktualnie jest niedostępny
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+</div>

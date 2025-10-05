@@ -1,0 +1,154 @@
+<div class="register-wrap">
+  <div class="form-shell">
+    <h1>
+      Witaj, jest nam niezmiernie miło, że postanowiłeś dołączyć do grona naszych Partnerów Biznesowych.
+    </h1>
+
+    <div class="card">
+      <h2 class="card-title">Dane dotyczące konta</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <div class="row">
+          <label>Imię
+            <input type="text" formControlName="name" />
+          </label>
+          <div class="error" *ngIf="f['name'].touched && f['name'].invalid">
+            <small *ngIf="f['name'].errors?.['required']">Imię jest wymagane.</small>
+            <small *ngIf="f['name'].errors?.['pattern']">Nieprawidłowe imię</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Nazwisko
+            <input type="text" formControlName="surname" />
+          </label>
+          <div class="error" *ngIf="f['surname'].touched && f['surname'].invalid">
+            <small *ngIf="f['surname'].errors?.['required']">Nazwisko jest wymagane.</small>
+            <small *ngIf="f['surname'].errors?.['pattern']">Nieprawidłowe nazwisko</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>E-mail
+            <input type="email" formControlName="email" />
+          </label>
+          <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+            <small *ngIf="f['email'].errors?.['required']">Email jest wymagany.</small>
+            <small *ngIf="f['email'].errors?.['email']">Nieprawidłowy format email.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Numer telefonu
+            <input type="tel" formControlName="phoneNumber" inputmode="numeric" />
+          </label>
+          <div class="error" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+            <small *ngIf="f['phoneNumber'].errors?.['required']">Numer telefonu jest wymagany</small>
+            <small *ngIf="f['phoneNumber'].errors?.['pattern']">Dozwolone są tylko cyfry</small>
+            <small *ngIf="f['phoneNumber'].errors?.['minlength']">Numer telefonu musi mieć 9 cyfr</small>
+            <small *ngIf="f['phoneNumber'].errors?.['maxlength']">Numer telefonu musi mieć 9 cyfr</small>
+          </div>
+        </div>
+
+        <div class="row password-row">
+          <label>Hasło
+            <div class="password-field">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+              <button type="button" class="eye" (click)="togglePassword()">
+                {{ showPassword ? 'Ukryj' : 'Pokaż' }}
+              </button>
+            </div>
+          </label>
+          <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+            <small *ngIf="f['password'].errors?.['required']">Hasło jest wymagane.</small>
+            <small *ngIf="f['password'].errors?.['minlength']">Minimum 8 znaków.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Potwierdź hasło
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" />
+          </label>
+          <div class="error" *ngIf="form.errors?.['passwordMismatch'] && (f['confirmPassword'].touched || f['password'].touched)">
+            <small>Hasła nie są zgodne.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Ulica
+            <input type="text" formControlName="street" />
+          </label>
+          <div class="error" *ngIf="f['street'].touched && f['street'].invalid">
+            <small *ngIf="f['street'].errors?.['required']">Ulica jest wymagana</small>
+            <small *ngIf="f['street'].errors?.['pattern']">Niepoprawna nazwa ulicy</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Numer budynku
+            <input type="text" formControlName="houseNumber" />
+          </label>
+          <div class="error" *ngIf="f['houseNumber'].touched && f['houseNumber'].invalid">
+            <small>Nieprawidłowy numer budynku</small>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <div class="row">
+            <label>Numer lokalu
+              <input type="text" formControlName="flatNumber" />
+            </label>
+            <div class="error" *ngIf="f['flatNumber'].touched && f['flatNumber'].invalid">
+              <small>Nieprawidłowy numer mieszkania</small>
+            </div>
+          </div>
+
+          <div class="row">
+            <label>Kod pocztowy
+              <input type="text" formControlName="postalCode" inputmode="numeric" />
+            </label>
+            <div class="error" *ngIf="f['postalCode'].touched && f['postalCode'].invalid">
+              <small *ngIf="f['postalCode'].errors?.['pattern']">Format: 00-000</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Miasto
+            <input type="text" formControlName="city" />
+          </label>
+          <div class="error" *ngIf="f['city'].touched && f['city'].invalid">
+            <small *ngIf="f['city'].errors?.['required']">Miasto jest wymagane</small>
+            <small *ngIf="f['city'].errors?.['pattern']">Niepoprawna nazwa miasta</small>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="acceptTerms" />
+            Akceptuję Regulamin Belle Rosse
+          </label>
+          <div class="error" *ngIf="f['acceptTerms'].touched && f['acceptTerms'].invalid">
+            <small>Musisz zaakceptować regulamin.</small>
+          </div>
+        </div>
+
+        <div *ngIf="sponsor" class="info-sponsor">
+          Rejestrujesz się z polecenia:
+          <strong>{{ sponsor.name }} {{ sponsor.surname }}</strong>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" [disabled]="form.invalid">Potwierdź</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="showPopup" class="toast">
+    Udało Ci się zarejestrować, teraz idź się zaloguj i korzystaj!
+    <button (click)="goToLogin()">Zaloguj</button>
+  </div>
+</div>

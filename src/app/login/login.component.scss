@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background-color: #faf9fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 70vh;
+}
+
+.login-box {
+  background-color: #efe9f1;
+  padding: 20px 50px;
+  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 8px;
+  background-color: #f5eff7;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+}
+
+.login-box button {
+  background-color: #7a1e3a;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 40px;
+  margin-top: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+  background-color: #7a1e3a;
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+@media (max-width: 480px) {
+  .login-box {
+    width: 90%;
+    padding: 25px;
+  }
+
+  .logo {
+    max-width: 100px;
+  }
+
+  .login-box button {
+    padding: 10px 30px;
+  }
+}

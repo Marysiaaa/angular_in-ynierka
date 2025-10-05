@@ -1,0 +1,148 @@
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+.orders-wrapper {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+th {
+  text-align: left;
+  padding: 12px 15px;
+  background-color: #f7f7f7;
+  font-weight: 600;
+  color: #555;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #555;
+}
+
+tr:nth-child(even) {
+  background-color: #fafafa;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+  transition: background-color 0.3s;
+}
+
+
+td .status {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  color: #fff;
+}
+
+
+.status.in-progress {
+  background-color: #f0ad4e;
+}
+
+.status.shipped {
+  background-color: #0275d8;
+}
+
+.status.delivered {
+  background-color: #5cb85c;
+}
+
+.status.paid {
+  background-color: #17a2b8;
+}
+
+.status.canceled {
+  background-color: #d9534f;
+}
+
+
+th.mat-sort-header-sorted {
+  color: #333;
+}
+
+.pay-btn,
+.cancel-btn,
+.deliver-btn{
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: 0.25s ease;
+  display: inline-block;
+  min-width: 150px;
+  text-align: center;
+}
+
+  .pay-btn {
+    background-color: #28a745;
+
+    &:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+
+  .cancel-btn {
+    background-color: #dc3545;
+
+    &:hover {
+      background-color: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    &:active {
+      transform: scale(0.97);
+    }
+  }
+.deliver-btn {
+  background-color: cadetblue;
+
+  &:hover {
+    background-color: cadetblue;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+@media (max-width: 768px) {
+  table, th, td {
+    font-size: 14px;
+  }
+  .orders-wrapper {
+    padding: 15px;
+  }
+}

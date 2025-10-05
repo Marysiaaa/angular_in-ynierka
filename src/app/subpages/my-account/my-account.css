@@ -1,0 +1,108 @@
+.my-account-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 15px;
+  font-family: "Cormorant Garamond", serif;
+  text-align: center;
+  color: #4a3f41;
+  background: linear-gradient(135deg, #faf6f7, #f3eef0);
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+.user-card {
+  background: #fff;
+  border: 1px solid #e9dff0;
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+}
+
+
+.avatar img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #f2d7f0;
+}
+
+.user-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 10px 0 20px 0;
+  color: #7a1e3a;
+}
+
+.user-info-box {
+  background: #efe9f1;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: left;
+  max-width: 450px;
+  margin: 0 auto 20px auto;
+  border: 1px solid #f3e6f6;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 16px;
+  padding-bottom: 6px;
+  border-bottom: 1px dashed #f0e4f5;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.invite-text {
+  margin-bottom: 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.ref-box {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ref-link-input {
+  flex: 1 1 60%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #e1cce9;
+  text-align: center;
+  font-size: 14px;
+  background: #fff6fb;
+}
+
+.copy-btn {
+  background: #7a1e3a;
+  color: #fff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.2s;
+}
+
+.copy-btn:hover {
+  background: #7a1e3a;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .info-row {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ref-link-input, .copy-btn {
+    width: 100%;
+  }
+}

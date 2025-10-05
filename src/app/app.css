@@ -1,0 +1,12 @@
+.app {
+  padding: 10px 40px;
+
+  .content-wrapper {
+
+    gap: 40px;
+
+    .router-outlet-wrapper {
+      flex: 1;
+    }
+  }
+}

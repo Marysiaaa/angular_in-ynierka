@@ -1,0 +1,38 @@
+<div class="form-container">
+
+  <h1>Dodaj nowy Produkt!</h1>
+
+  <div class="add-product-form">
+
+    <form (ngSubmit)="addProduct()" #productForm="ngForm">
+
+      <label>
+        Nazwa produktu:
+        <input type="text" name="nameProduct" [(ngModel)]="newProduct.nameProduct" required>
+      </label>
+
+      <label>
+        Cena produktu:
+        <input type="number" name="priceProduct" [(ngModel)]="newProduct.priceProduct" required min="1">
+      </label>
+
+      <label>
+        Ilość produktu:
+        <input type="number" name="quantityProduct" [(ngModel)]="newProduct.quantityProduct" required min="1">
+      </label>
+
+      <label>Kategoria Produktu</label>
+      <select name="category" [(ngModel)]="newProduct.category">
+        <option [ngValue]="ProductCategory.DlaNiej">Dla Niej</option>
+        <option [ngValue]="ProductCategory.DlaNiego">Dla Niego</option>
+      </select>
+
+      <button type="submit" [disabled]="productForm.invalid">
+        Dodaj produkt
+      </button>
+
+    </form>
+
+  </div>
+
+</div>

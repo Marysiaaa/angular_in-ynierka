@@ -1,0 +1,72 @@
+<h1>Mój koszyk</h1>
+
+<div class="basket-wrapper">
+
+  <table mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="NameProduct">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Produkt </th>
+      <td mat-cell *matCellDef="let element">{{ element.nameProduct }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="PriceProduct">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cena jednostkowa </th>
+      <td mat-cell *matCellDef="let element">{{ element.priceProduct | currency:' PLN ' }}</td>
+
+    </ng-container>
+
+    <ng-container matColumnDef="QuantityProduct">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Ilość </th>
+      <td mat-cell *matCellDef="let element" class="qty-cell">
+        <button class="qty-btn" (click)="changeQty(element, -1)" [disabled]="element.quantityProduct <= 1">
+          −</button>
+        <span>{{ element.quantityProduct }}</span>
+        <button class="qty-btn" (click)="changeQty(element, 1)">+</button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="TotalAmount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Wartość </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.totalAmount | currency:' PLN ' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Actions">
+      <th mat-header-cell *matHeaderCellDef> </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="warn" (click)="remove(row)">
+          <mat-icon>remove_shopping_cart</mat-icon>
+        </button>      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+  </table>
+
+  <div class="summary">
+    <div> Razem: <strong>{{ total | currency:' PLN ' }}</strong> </div>
+  </div>
+
+  <div class="cart-buttons">
+    <button class="btn-outline" (click)="kontynuujZakupy()">Kontynuuj zakupy</button>
+    <button class="btn-main" (click)="zlozZamowienie()">Złóż zamówienie</button>
+  </div>
+
+  <div *ngIf="successPopup" class="toast">
+    Twoje zamówienie zostało złożone!
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+  <div *ngIf="errorPopup" class="toast">
+   Nie można utworzyć pustego zamówienia.<br>
+    Dodaj produkty do koszyka, by utworzyć zamówienie!
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+</div>
+
+<div *ngIf="errorPopupQuantity" class="toast">
+ Nie można wprowadzić minusowej ilości produktu
+  <button (click)="closePopupError()">Zamknij</button>
+</div>
