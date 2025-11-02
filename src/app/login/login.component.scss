@@ -1,0 +1,77 @@
+/* Ustawienia ogólne */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background-color: #faf9fb;
+  align-items: center;
+
+}
+
+/* Kontener formularza */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+}
+
+/* Główne pudełko */
+.login-box {
+  background-color: #efe9f1;
+  padding: 50px 60px;
+
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 360px;
+}
+
+/* Logo */
+.logo {
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+
+/* Pola formularza */
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  background-color: #f5eff7;
+  font-size: 14px;
+  text-align: center;
+  outline: none;
+}
+
+/* Przycisk logowanie*/
+.login-box button {
+  background-color: #8b1d61;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 40px;
+  margin-top: 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.login-box button:hover {
+  background-color: #a62c77;
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .login-box {
+    width: 90%;
+    padding: 30px;
+  }
+}

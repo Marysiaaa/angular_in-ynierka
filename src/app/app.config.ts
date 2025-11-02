@@ -1,12 +1,37 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import {ApplicationConfig} from '@angular/core';
+import {Routes, provideRouter} from '@angular/router';
+import {LoginComponent} from './login/login.component';
+import {comment} from 'postcss';
+import {OrdersComponent} from './subpages/my_orders/my_orders.component';
+import {ClientsOrdersComponent} from './subpages/clients_orders/clients_orders.component';
 
-import { routes } from './app.routes';
 
+const routes: Routes = [
+  {
+    path: "login/login",
+    component: LoginComponent,
+  },
+
+  {
+    path: "",
+    component: LoginComponent,
+
+  },
+  {
+    path: "my_orders",
+    component: OrdersComponent,
+  },
+  {
+    path: "clients_orders",
+    component: ClientsOrdersComponent,
+  },
+  {
+    path: "kontakt",
+    component: ClientsOrdersComponent,
+  }
+
+];
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes)
-  ]
+  providers: [provideRouter(routes)],
+
 };
