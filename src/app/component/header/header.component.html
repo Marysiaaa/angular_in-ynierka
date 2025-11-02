@@ -1,7 +1,12 @@
 <header class="header">
-  <a [routerLink]="RoutePath.HOME" class="header__logo-wrapper">
-    <img class="logo" ngSrc="graphics/logo_1.png"  alt="Belle Rosse Perfume Shop" width="100" height="100" [priority]="true" />
-  </a>
+  <div>
+    <a [routerLink]="RoutePath.HOME" class="header__logo-wrapper">
+      <img class="logo" ngSrc="graphics/logo_1.png" alt="Belle Rosse Perfume Shop" width="100" height="100"
+           [priority]="true"/>
+    </a>
+  </div>
+
+  <cp-navigation></cp-navigation>
 
   <div class="header__buttons">
     <button *cpIfAuthenticated="true" (click)="onLogoutClick()" mat-raised-button class="logout-btn">Wyloguj</button>
@@ -9,3 +14,6 @@
     <button *cpIfAuthenticated="false" (click)="OnLoginClick()" mat-raised-button class="logout-btn">Zaloguj</button>
   </div>
 </header>
+
+
+
