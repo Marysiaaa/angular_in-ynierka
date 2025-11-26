@@ -1,0 +1,125 @@
+.basket-wrapper {
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 20px;
+  font-family: 'Inter', sans-serif;
+}
+
+
+
+
+/* Tabela */
+table {
+  width: 100%;
+  border-collapse: separate !important;
+  border-spacing: 0 12px !important;
+}
+
+.mat-mdc-header-cell {
+  font-weight: 500;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Wiersze */
+.mat-mdc-row {
+  background: #fff !important;
+  border-radius: 8px;
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.06);
+}
+
+.mat-mdc-cell {
+  padding: 18px 14px !important;
+  font-size: 15px;
+}
+
+/* Kolumna ilości */
+.qty-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Przyciski + / - */
+.qty-btn {
+  width: 32px;
+  height: 32px;
+  background: #7a0039;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.qty-btn:hover {
+  background: #9a004a;
+}
+
+/* Podsumowanie na dole (opcjonalnie) */
+.summary {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  font-size: 16px;
+  gap: 30px;
+}
+
+
+
+.cart-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2.5rem;
+  padding: 0 1rem;
+}
+
+/* Podstawowy styl dla obu przycisków */
+.cart-buttons button,
+.cart-buttons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.75rem;
+  border-radius: 999px; /* efekt kapsułki */
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+
+/* Lewy przycisk - kontynuuj zakupy */
+.btn-outline {
+  background: #8b0055;
+  border: 2px solid #8b0055;
+  color: #fff;
+}
+
+
+
+/* Prawy przycisk - złóż zamówienie */
+.btn-main {
+  background: #8b0055;
+  border: 2px solid #8b0055;
+  color: #fff;
+}
+
+.btn-main:hover {
+  background: #700044;
+  border-color: #700044;
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(139, 0, 85, 0.4);
+}
+
+/* Opcjonalnie: animacja kliknięcia */
+.btn-outline:active,
+.btn-main:active {
+  transform: scale(0.97);
+  box-shadow: none;
+}
+

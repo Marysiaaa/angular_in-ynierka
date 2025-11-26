@@ -11,19 +11,32 @@
     </ng-container>
     <ng-container matColumnDef="UserId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ID Użytkownika</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.UserId }}</td>
     </ng-container>
     <ng-container matColumnDef="OrderDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data rejestracji zamówienia</th>
-      <td mat-cell *matCellDef="let element">{{ element.OrderDate}}</td>
+      <td mat-cell *matCellDef="let element">{{ element.OrderDate }}</td>
     </ng-container>
     <ng-container matColumnDef="TotalAmount">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Cena</th>
-      <td mat-cell *matCellDef="let element">{{ element.TotalAmount}}</td>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Kwota</th>
+      <td mat-cell *matCellDef="let element">{{ element.TotalAmount }}</td>
     </ng-container>
     <ng-container matColumnDef="StatusOrder">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-      <td mat-cell *matCellDef="let element">{{ element.StatusOrder}}</td>
+      <td mat-cell *matCellDef="let element">
+    <span class="status"
+          [ngClass]="{
+            'in-progress': element.StatusOrder === 'W REALIZACJI',
+            'delivered': element.StatusOrder === 'DOSTARCZONE',
+            'shipped':element.StatusOrder==='WYSŁANO',
+           'canceled': element.StatusOrder === 'ANULOWANO',
+           'paid': element.StatusOrder === 'OPŁACONO',
+
+
+          }">
+      {{ element.StatusOrder }}
+    </span>
+      </td>
     </ng-container>
   </table>
 </div>

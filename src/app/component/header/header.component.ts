@@ -17,10 +17,6 @@ export class HeaderComponent {
   protected readonly RoutePath: typeof RoutePath = RoutePath;
   private readonly _authService: AuthService = inject(AuthService);
 
-  protected async onLogoutClick(): Promise<void> {
-    await this._authService.logout();
-  }
-
   protected async OnLoginClick(): Promise<void> {
     // await this._authService.login();
   }

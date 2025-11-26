@@ -1,12 +1,15 @@
 export enum RoutePath {
   LOGIN = "/login",
-  HOME = "/",
-  O_NAS = "/o-nas",
-  KONTAKT = "/kontakt",
+  HOME = "/home",
+  ABOUT_US = "/about-us",
+  CONTACT = "/contact",
   STRUKTURA = "/struktura",
   ROZLICZENIA = "/rozliczenia",
   MY_ORDERS = "/my_orders",
-  MY_ACCOUNT = "/myaccount",
-  CLIENTS_ORDERS = "/clients_orders"
+  MY_ACCOUNT = "/my-account",
+  CLIENTS_ORDERS = "/clients_orders",
+  PERSON="/person",
+  WALLET = "/wallet",
+  BASKET = "/basket",
 
 }

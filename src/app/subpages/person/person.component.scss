@@ -8,7 +8,7 @@ h1 {
 }
 
 /* Wrapper tabeli */
-.client-orders-wrapper {
+.people-wrapper {
   background-color: #fff;
   padding: 20px;
   border-radius: 15px;
@@ -70,19 +70,6 @@ td .status {
   background-color: #5cb85c;
   color: #fff;
 }
-.status.shipped {
-  background-color: #f0ad4e;
-  color: #fff;
-}
-.status.canceled {
-  background-color: #f0ad4e;
-  color: #fff;
-}
-.status.shipped {
-  background-color: #f0ad4e;
-  color: #fff;
-}
-
 
 /* Sortowanie */
 th.mat-sort-header-sorted {

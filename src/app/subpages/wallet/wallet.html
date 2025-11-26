@@ -1,0 +1,39 @@
+<div class="wallet-container">
+  <img src="graphics/portfel.png" alt="Portfel" class="portfel">
+  <h2>Mój portfel</h2>
+
+  <table class="wallet-table">
+    <tr>
+      <th>Saldo portfela</th>
+      <th>Dostępne środki</th>
+    </tr>
+    <tr>
+      <td>{{ saldo }} zł</td>
+      <td>{{ dostepneSrodki }} zł</td>
+    </tr>
+  </table>
+
+
+  <h3>Transakcje</h3>
+
+  <div class="transactions-wrapper">
+    <table mat-table matSort [dataSource]="dataSource" (matSortChange)="announceSortChange()">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <ng-container matColumnDef="OperationDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data transakcji</th>
+        <td mat-cell *matCellDef="let element">{{ element.OperationDate }}</td>
+      </ng-container>
+      <ng-container matColumnDef="Amount">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Kwota</th>
+        <td mat-cell *matCellDef="let element">{{ element.Amount }}</td>
+      </ng-container>
+      <ng-container matColumnDef="OperationType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ operacji</th>
+        <td mat-cell *matCellDef="let element">{{ element.OperationType}}</td>
+      </ng-container>
+
+    </table>
+  </div>
+</div>

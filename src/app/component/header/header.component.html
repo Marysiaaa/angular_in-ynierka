@@ -9,7 +9,6 @@
   <cp-navigation></cp-navigation>
 
   <div class="header__buttons">
-    <button *cpIfAuthenticated="true" (click)="onLogoutClick()" mat-raised-button class="logout-btn">Wyloguj</button>
 
     <button *cpIfAuthenticated="false" (click)="OnLoginClick()" mat-raised-button class="logout-btn">Zaloguj</button>
   </div>

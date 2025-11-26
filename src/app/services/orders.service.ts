@@ -1,26 +1,28 @@
-import { Injectable } from "@angular/core";
-import { Observable, of } from "rxjs";
-import { Order } from "../types/order";
+import {inject, Injectable} from "@angular/core";
+import {Observable, of} from "rxjs";
+import {Order} from "../types/order";
+import {environment} from '../../environment';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 @Injectable({
   providedIn: "root"
 })
 export class OrdersService {
-  // Przykładowe dane — możesz później zastąpić wywołaniem HTTP
-  private readonly _orders: Order[] = [
-    { id: 1, date: "2025-10-15",userId:2,totalAmount:50, status: "W realizacji" },
-    { id: 2, date: "2025-10-18",userId:4, totalAmount:50, status: "Zakończone" }
-  ];
+  private apiUrl: string = environment.apiUrl;
 
-  constructor() {}
 
-  /**
-   * Zwraca wszystkie zamówienia jako Observable
-   */
-  getAll(): Observable<Order[]> {
-    return of(this._orders);
+  constructor(private http: HttpClient) {
   }
 
+
+  getAll(): Observable<Order[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<Order[]>(`${this.apiUrl}/api/orders`, {headers});
+  };
 
 
 }

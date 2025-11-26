@@ -1,9 +1,9 @@
 interface Order {
-  id: number;
-  date:string;
-  userId: number;
-  totalAmount: number;
-  status: string;
+  OrderId: string;
+  UserId: string;
+  OrderDate:string;
+  TotalAmount: number;
+  StatusOrder: number;
 }
 
 export type {Order};

@@ -58,6 +58,8 @@
 
 /* menu dropdown ustawione absolutnie względem rodzica */
 .dropdown__menu {
+  list-style: none;
+
   display: none;
   position: absolute;
   top: 100%; /* poniżej linku */
@@ -73,6 +75,7 @@
 
 /* Elementy dropdowna */
 .dropdown__item {
+
   padding: 10px 20px;
   color: var(--text-color);
   font-size: 14px;

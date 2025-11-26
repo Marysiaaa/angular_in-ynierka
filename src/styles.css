@@ -6,3 +6,87 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.footer {
+  background-color: #222; /* ciemne tło */
+  color: #fff;             /* jasny tekst */
+  text-align: center;
+  padding: 20px 10px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 -2px 5px rgba(0,0,0,0.2); /* delikatny cień od góry */
+}
+
+.footer-content p {
+  margin: 5px 0;
+}
+
+.footer p:first-child {
+  font-weight: 500;
+}
+
+/* Styl powiadomienia (toast) */
+.toast {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  left: auto;
+
+  background: #ffe3f5; /* jasny róż */
+  border-left: 6px solid #b30086; /* kolor akcentu */
+
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+
+  min-width: 260px;
+  font-family: "Poppins", sans-serif;
+
+  z-index: 99999;
+
+  color: #4b0040; /* ciemniejszy fiolet */
+}
+
+.toast strong {
+  font-size: 16px;
+  color: #b30086;
+}
+
+.toast p {
+  font-size: 14px;
+  margin: 5px 0 12px 0;
+  color: #59004a;
+}
+
+/* Przyciski */
+.toast button {
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+/* przycisk przejścia do koszyka */
+.toast button.go {
+  background: #b30086;
+  color: white;
+}
+
+.toast button.go:hover {
+  background: #8a006a;
+}
+
+/* przycisk zamknięcia */
+.toast button.close {
+  background: #e6b9d6;
+  color: #4b0040;
+}
+
+.toast button.close:hover {
+  background: #d498c3;
+}

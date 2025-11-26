@@ -3,36 +3,33 @@ import { MatSort, MatSortModule } from "@angular/material/sort";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { RoutePath } from "../../enums/route-path";
-import { OrdersService } from "../../services/orders.service";
-import {Order} from "../../types/order";
 import { take } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatIconModule } from "@angular/material/icon";
-import {NgClass} from '@angular/common';
+import {PersonService} from '../../services/person.service';
+import {User} from '../../types/user';
 
 @Component({
-  selector: "cp-my-orders",
-  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass],
-  templateUrl: "./my_orders.component.html",
-  styleUrls: ["./my_orders.component.scss"]
+  selector: "cp-Person",
+  imports: [MatTableModule, MatSortModule, MatIconModule],
+  templateUrl: "./person.component.html",
+  styleUrl: "./person.component.scss"
 })
-export class OrdersComponent implements AfterViewInit {
+export class PersonComponent implements AfterViewInit {
   @ViewChild(MatSort)
   protected readonly matSort!: MatSort;
-  protected readonly displayedColumns: string[] = ["OrderId", "UserId", "OrderDate","TotalAmount","StatusOrder"];
-  protected readonly dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
+  protected readonly displayedColumns: string[] = ["UserId", "Name","Surname","Email","PhoneNumber","RegistrationDate"];
+  protected readonly dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
   protected readonly RoutePath: typeof RoutePath = RoutePath;
 
-  private readonly _ordersService: OrdersService = inject(OrdersService);
+  private readonly _personService: PersonService = inject(PersonService);
   private readonly _liveAnnouncer: LiveAnnouncer = inject(LiveAnnouncer);
 
   constructor() {
-    this._ordersService
+    this._personService
       .getAll()
       .pipe(take(1), takeUntilDestroyed())
-      .subscribe((data: Order[]): void => {
-        console.log('Ladowanie danych')
-        console.log(data);
+      .subscribe((data: User[]): void => {
         this.dataSource.data = data;
       });
   }
@@ -42,6 +39,6 @@ export class OrdersComponent implements AfterViewInit {
   }
 
   protected async announceSortChange(): Promise<void> {
-    await this._liveAnnouncer.announce("Zmieniono sortowanie zamówień");
+    await this._liveAnnouncer.announce("Zmieniono sortowanie osób");
   }
 }

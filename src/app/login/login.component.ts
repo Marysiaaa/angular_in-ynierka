@@ -7,19 +7,23 @@ import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+
+  standalone: true,
   imports: [
     FormsModule,CommonModule,
   ]
 })
 export class LoginComponent {
-  username = '';
+  email = '';
   password = '';
-  error = '';
+  //error = '';
   constructor(private auth: AuthService, private router: Router) {}
   onSubmit(){
-    this.auth.login(this.username, this.password).subscribe({
-      next:()=>this.router.navigate([/dashboard/]),
-      error:error=>"Podałeś niepoprawny login lub hasło"
+   console.log(this.email);
+    this.auth.login(this.email, this.password).subscribe({
+      next: () => this.router.navigate(['/home']),
+     // error: (err) => this.error = "Podałeś niepoprawny login lub hasło"
     });
   }
 }

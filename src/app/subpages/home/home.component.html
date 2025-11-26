@@ -1,3 +1,36 @@
-<div>
-    <h1>Home page</h1>
+<div class="home-wrapper">
+
+  <div class="tabs">
+    <button [class.active]="selectedTab === 'dlaNiej'" (click)="changeTab('dlaNiej')">
+      Dla niej
+    </button>
+
+    <button [class.active]="selectedTab === 'dlaNiego'" (click)="changeTab('dlaNiego')">
+      Dla niego
+    </button>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let p of filteredProducts">
+
+      <img src="https://via.placeholder.com/200" alt="{{ p.NameProduct }}">
+
+      <h3>{{ p.NameProduct }}</h3>
+
+      <p>Cena: {{ p.PriceProduct }} zł</p>
+      <p>Ilość: {{ p.QuantityProduct }}</p>
+
+      <button class="buy-btn" (click)="buy(p)">Kup teraz
+      </button>
+    </div>
+  </div>
+
+
+  <div *ngIf="showPopup" class="toast">
+    Produkt został dodany do koszyka!
+    <button (click)="closePopup()">Zamknij</button>
+    <button (click)="goToBasket()">Idź do koszyka</button>
+  </div>
+
+
 </div>

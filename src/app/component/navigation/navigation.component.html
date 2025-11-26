@@ -7,13 +7,13 @@
     </li>
 
     <li>
-      <a [routerLink]="RoutePath.O_NAS" class="link">
+      <a [routerLink]="RoutePath.ABOUT_US" class="link">
         <div class="link__name">O nas</div>
       </a>
     </li>
 
     <li>
-      <a [routerLink]="RoutePath.KONTAKT" class="link">
+      <a [routerLink]="RoutePath.CONTACT" class="link">
         <div class="link__name">Kontakt</div>
       </a>
     </li>
@@ -24,6 +24,11 @@
       </a>
       <ul class="dropdown__menu">
         <li>
+          <a [routerLink]="RoutePath.WALLET" class="dropdown__item">
+            <span>Portfel</span>
+          </a>
+        </li>
+        <li>
           <a [routerLink]="RoutePath.MY_ORDERS" class="dropdown__item">
             <span>Moje zamówienia</span>
           </a>
@@ -33,19 +38,42 @@
             <span>Zamówienia klientów</span>
           </a>
         </li>
+
       </ul>
     </li>
 
-    <li>
+    <li class="dropdown">
       <a [routerLink]="RoutePath.STRUKTURA" class="link">
         <div class="link__name">Struktura</div>
       </a>
+      <ul class="dropdown__menu">
+        <li>
+          <a [routerLink]="RoutePath.PERSON" class="dropdown__item">
+            <span>Lista osób</span>
+          </a>
+        </li>
+      </ul>
     </li>
 
-    <li>
+    <li class="dropdown">
       <a [routerLink]="RoutePath.MY_ACCOUNT" class="link">
         <div class="link__name">Moje konto</div>
       </a>
+      <ul class="dropdown__menu">
+
+        <a [routerLink]="RoutePath.HOME" class="link">
+          <div class="link__name">
+            <button *cpIfAuthenticated="true" (click)="onLogoutClick()" mat-raised-button class="logout-btn">Wyloguj</button>
+          </div>
+        </a>
+
+      </ul>
     </li>
+    <li>
+      <a [routerLink]="RoutePath.BASKET" class="link">
+        <div class="link__name">Koszyk</div>
+      </a>
+    </li>
+
   </ul>
 </nav>

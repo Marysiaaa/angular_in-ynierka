@@ -1,0 +1,64 @@
+<div class="my-account-container">
+
+  <div class="user-card">
+    <div class="avatar">
+      <img src="graphics/ikona.png" alt="User icon" class="avatar">
+
+    </div>
+
+    <div class="user-name">
+      Maria Oleksińska
+    </div>
+
+    <div class="user-info-box">
+      <div class="info-row">
+        <span class="label">ID:</span>
+        <span class="value">12345</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Login:</span>
+        <span class="value">maria</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Sponsor:</span>
+        <span class="value">Anna K.</span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Posiadana ranga:</span>
+        <span class="value"><em>Dystybutor</em></span>
+      </div>
+
+      <div class="info-row">
+        <span class="label">Data rejestracji:</span>
+        <span class="value"><strong>01.11.2024</strong></span>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="invite-text">
+    Użyj swojego linku partnerskiego do zapraszania przyjaciół, klientów i partnerów.
+  </p>
+
+  <div class="ref-box">
+    <input
+      type="text"
+      class="ref-link-input"
+      [value]="referralLink"
+      readonly
+    >
+    <button class="copy-btn" (click)="copyReferralLink()">
+      Kopiuj link
+    </button>
+  </div>
+
+
+  <div *ngIf="showPopup" class="toast">
+    Twoj link został skopiowany!
+    <button (click)="closePopup()">Zamknij</button>
+
+  </div>
+</div>
