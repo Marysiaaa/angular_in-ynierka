@@ -1,5 +1,5 @@
 import { Directive, effect, inject, Input, TemplateRef, ViewContainerRef } from "@angular/core";
-import { AuthService } from "../../../../../Desktop/STUDIA/PZ/class-planner/src/Client/src/app/services/auth.service";
+import {AuthService} from '../services/auth.service';
 
 @Directive({
     selector: "[cpIfAuthenticated]",
