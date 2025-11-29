@@ -58,22 +58,31 @@ export class BasketComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.matSort;
   }
+  changeQty(item: BasketItem, diff: number) {
+    if (diff === 1) {
+      this.basketService.increaseQuantity(item.productId);
+    } else {
+      this.basketService.decreaseQuantity(item.productId);
+    }
 
-  changeQty(row: BasketItem, diff: number) {
-    const newQty = row.quantityProduct + diff;
-    row.quantityProduct = newQty < 1 ? 1 : newQty;
-    row.totalAmount = row.quantityProduct * row.product.priceProduct;
-
-    this.updateSummary();
-    this.table.renderRows();
+    this.updateTotal();
   }
+
+  remove(item: BasketItem) {
+    this.basketService.removeItem(item.productId);
+    this.updateTotal();
+  }
+
+  updateTotal() {
+    this.total = this.basketService.getTotal();
+  }
+
+
 
   updateSummary() {
     this.total = this.basketService.getTotal();
   }
-  remove(row: BasketItem) {
-    this.basketService.removeItem(row.product.id);
-  }
+
 
   kontynuujZakupy() {
     this.router.navigate(['/home']); // przekierowanie do strony home

@@ -17,6 +17,10 @@ export class AuthService {
       tap((response: any) => {
         if (response?.token) {
           localStorage.setItem('token', response.token);
+          const userId = this.extractUserIdFromToken(response.token);
+          if (userId) {
+            localStorage.setItem('userId', userId);
+          }
         }
       })
     );
@@ -36,6 +40,16 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     return this.getToken() !== null;
+  }
+
+  private extractUserIdFromToken(token: string): string | null {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.sub || null;
+    } catch (error) {
+      console.error('Error decoding JWT token:', error);
+      return null;
+    }
   }
 }
 
