@@ -12,7 +12,6 @@ import {environment} from '../../environment';
 })
 export class BasketService {
   private apiUrl: string = environment.apiUrl;
-  private basketId = "YOUR_BASKET_GUID";  // <- tutaj podaj swój koszyk
 
 
   private basketItems = new BehaviorSubject<BasketItem[]>([]);
@@ -24,8 +23,17 @@ export class BasketService {
       'Authorization': `Bearer ${token}`
     });
 
-    const userId = '';
-    const basketId = http.get<string>(`${this.apiUrl}/users/${userId}/myBasket`, {headers});
+    const userId = localStorage.getItem("userId");
+
+    this.http
+      .get<string>(`${this.apiUrl}/users/${userId}/myBasket`, { headers })
+      .subscribe({
+        next: id => {
+          this.basketId = id;
+          this.loadBasket();
+        },
+        error: err => console.error("Błąd pobierania koszyka", err)
+      });
   }
 
   getItems(): BasketItem[] {
@@ -53,7 +61,7 @@ export class BasketService {
 
     this.setItems([...items])
   }
-  increaseQuantity(productId: number) {
+  increaseQuantity(productId: string) {
     return this.http.patch(
       `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/increase`,
       {}
@@ -62,7 +70,7 @@ export class BasketService {
     });
   }
 
-  decreaseQuantity(productId: number) {
+  decreaseQuantity(productId: string) {
     return this.http.patch(
       `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/decrease`,
       {}
@@ -70,6 +78,7 @@ export class BasketService {
       this.updateLocalQuantity(productId, -1);
     });
   }
+
 
   private updateLocalQuantity(productId: number, diff: number) {
     const updated = this.getItems().map(item => {
@@ -86,25 +95,15 @@ export class BasketService {
 
     this.setItems(updated);
   }
+  loadBasket() {
+    if (!this.basketId) return;
 
-  getTotal() {
-    return this.getItems()
-      .reduce((sum, item) => sum + (item.product.priceProduct * item.quantityProduct), 0);
-  }
-  removeItem(productId: number) {
-    return this.http.delete(
-      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}`
-    ).subscribe(() => {
-      const newItems = this.getItems().filter(i => i.product.id !== productId);
-      this.setItems(newItems);
+    this.http.get<BasketItem[]>(
+      `${this.apiUrl}/baskets/${this.basketId}`
+    ).subscribe({
+      next: items => this.setItems(items),
+      error: err => console.error("Błąd ładowania koszyka", err)
     });
   }
 
-
-  //Strumień koszyka
-  getBasket() {
-    return this.basketItems$;
   }
-
-
-}
