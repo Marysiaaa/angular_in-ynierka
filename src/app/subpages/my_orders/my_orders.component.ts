@@ -4,15 +4,16 @@ import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { RoutePath } from "../../enums/route-path";
 import { OrdersService } from "../../services/orders.service";
-import {Order} from "../../types/order";
+import {Order, StatusOrder} from "../../types/order";
 import { take } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatIconModule } from "@angular/material/icon";
 import {NgClass} from '@angular/common';
+import {StatusOrderPipe} from '../../pipes/status-order.pipe';
 
 @Component({
   selector: "cp-my-orders",
-  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass],
+  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass, StatusOrderPipe],
   templateUrl: "./my_orders.component.html",
   styleUrls: ["./my_orders.component.scss"]
 })
@@ -27,6 +28,7 @@ export class OrdersComponent implements AfterViewInit {
   private readonly _liveAnnouncer: LiveAnnouncer = inject(LiveAnnouncer);
 
   constructor() {
+    console.log('konstruktor')
     this._ordersService
       .getAll()
       .pipe(take(1), takeUntilDestroyed())
@@ -44,4 +46,6 @@ export class OrdersComponent implements AfterViewInit {
   protected async announceSortChange(): Promise<void> {
     await this._liveAnnouncer.announce("Zmieniono sortowanie zamówień");
   }
+
+  protected readonly StatusOrder = StatusOrder;
 }

@@ -1,9 +1,15 @@
-interface Order {
-  OrderId: string;
-  UserId: string;
-  OrderDate:string;
-  TotalAmount: number;
-  StatusOrder: number;
+export interface Order {
+  orderId: string;
+  userId: string;
+  orderDate: string;
+  totalAmount: number;
+  statusOrder: number;
 }
 
-export type {Order};
+export enum StatusOrder {
+  InProgress,
+  Shipped,
+  Delivered,
+  Canceled,
+  PAID
+}

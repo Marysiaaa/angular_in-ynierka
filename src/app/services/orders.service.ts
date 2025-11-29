@@ -21,8 +21,7 @@ export class OrdersService {
       'Authorization': `Bearer ${token}`
     });
 
+    console.log(headers);
     return this.http.get<Order[]>(`${this.apiUrl}/api/orders`, {headers});
   };
-
-
 }
