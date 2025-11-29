@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {Observable, of} from "rxjs";
-import {User} from "../types/user";
+import {Product} from "../types/product";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environment';
 
 @Injectable({
   providedIn: "root"
 })
-export class PersonService {
+export class ProductService {
   private apiUrl: string = environment.apiUrl;
 
 
@@ -15,13 +15,13 @@ export class PersonService {
   }
 
 
-  getAll(): Observable<User[]> {
+  getAll(): Observable<Product[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<User[]>(`${this.apiUrl}/api/users`, {headers});
+    return this.http.get<Product[]>(`${this.apiUrl}/api/Products`, {headers});
   };
 
 }

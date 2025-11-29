@@ -24,4 +24,14 @@ export class OrdersService {
     console.log(headers);
     return this.http.get<Order[]>(`${this.apiUrl}/api/orders`, {headers});
   };
+  getClientOrders(): Observable<Order[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    console.log(headers);
+    return this.http.get<Order[]>(`${this.apiUrl}/api/clientOrders`, {headers});
+  };
+
 }

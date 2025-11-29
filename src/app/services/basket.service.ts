@@ -2,73 +2,103 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {BasketItem} from '../types/basketItem';
 import {Product, ProductCategory} from '../types/product';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environment';
+
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class BasketService {
+  private apiUrl: string = environment.apiUrl;
+  private basketId = "YOUR_BASKET_GUID";  // <- tutaj podaj swój koszyk
+
 
   private basketItems = new BehaviorSubject<BasketItem[]>([]);
   basketItems$ = this.basketItems.asObservable();
 
-  private readonly _product: BasketItem[] = [
-    {
-      Product: {id: 5, NameProduct: 'Produkt A', PriceProduct: 10, QuantityProduct: 5, category: ProductCategory.DlaNiego},
-      QuantityProduct: 2,
-      TotalAmount: 20,
-    },
-    {
-      Product: {id: 6, NameProduct: 'Produkt B', PriceProduct: 10, QuantityProduct: 5, category: ProductCategory.DlaNiego},
-      QuantityProduct: 2,
-      TotalAmount: 20,
-    },
-  ];
+  constructor(private http: HttpClient) {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
 
-  constructor() {
-    // Inicjalizacja koszyka
-    this.basketItems.next([...this._product]);
+    const userId = '';
+    const basketId = http.get<string>(`${this.apiUrl}/users/${userId}/myBasket`, {headers});
   }
 
   getItems(): BasketItem[] {
     return this.basketItems.value;
   }
 
-  addItem(product: Product) {
-    const items = this.getItems();
-    const existing = items.find(p => p.Product.id === product.id);
-
-    if (existing) {
-      existing.QuantityProduct += product.QuantityProduct;
-    } else {
-      const basketItem : BasketItem = {
-        Product: product,
-        TotalAmount: 1,
-        QuantityProduct: 1,
-      }
-      items.push(basketItem);
-    }
-    this.basketItems.next([...items]);
+  setItems(items: BasketItem[]) {
+    this.basketItems.next(items);
   }
 
-  updateQuantity(id: number, change: number) {
-    const items = this.getItems().map(item => {
-      if (item.Product.id === id) {
-        const newQty = item.QuantityProduct + change;
-        return {...item, QuantityProduct: Math.max(newQty, 1)};
+  addItem(product: Product) {
+    const items = this.getItems();
+    const existing = items.find(i => i.product.id === product.id);
+
+    if (existing) {
+      existing.quantityProduct++;
+      existing.totalAmount = existing.quantityProduct * existing.product.priceProduct;
+    } else {
+      items.push({
+        product: product,
+        quantityProduct: 1,
+        totalAmount: product.priceProduct
+      });
+    }
+
+    this.setItems([...items])
+  }
+  increaseQuantity(productId: number) {
+    return this.http.patch(
+      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/increase`,
+      {}
+    ).subscribe(() => {
+      this.updateLocalQuantity(productId, +1);
+    });
+  }
+
+  decreaseQuantity(productId: number) {
+    return this.http.patch(
+      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/decrease`,
+      {}
+    ).subscribe(() => {
+      this.updateLocalQuantity(productId, -1);
+    });
+  }
+
+  private updateLocalQuantity(productId: number, diff: number) {
+    const updated = this.getItems().map(item => {
+      if (item.product.id === productId) {
+        const qty = Math.max(item.quantityProduct + diff, 1);
+        return {
+          ...item,
+          quantityProduct: qty,
+          totalAmount: qty * item.product.priceProduct
+        };
       }
       return item;
     });
-    this.basketItems.next(items);
+
+    this.setItems(updated);
   }
 
   getTotal() {
     return this.getItems()
-      .reduce((sum, item) => sum + (item.Product.PriceProduct * item.QuantityProduct), 0);
+      .reduce((sum, item) => sum + (item.product.priceProduct * item.quantityProduct), 0);
   }
-  removeItem(id: number) {
-    const items = this.getItems().filter(item => item.Product.id !== id);
-    this.basketItems.next(items)}
+  removeItem(productId: number) {
+    return this.http.delete(
+      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}`
+    ).subscribe(() => {
+      const newItems = this.getItems().filter(i => i.product.id !== productId);
+      this.setItems(newItems);
+    });
+  }
 
 
   //Strumień koszyka

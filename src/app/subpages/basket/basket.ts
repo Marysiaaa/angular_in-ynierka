@@ -60,9 +60,9 @@ export class BasketComponent implements OnInit, AfterViewInit {
   }
 
   changeQty(row: BasketItem, diff: number) {
-    const newQty = row.QuantityProduct + diff;
-    row.QuantityProduct = newQty < 1 ? 1 : newQty;
-    row.TotalAmount = row.QuantityProduct * row.Product.PriceProduct;
+    const newQty = row.quantityProduct + diff;
+    row.quantityProduct = newQty < 1 ? 1 : newQty;
+    row.totalAmount = row.quantityProduct * row.product.priceProduct;
 
     this.updateSummary();
     this.table.renderRows();
@@ -72,7 +72,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
     this.total = this.basketService.getTotal();
   }
   remove(row: BasketItem) {
-    this.basketService.removeItem(row.Product.id);
+    this.basketService.removeItem(row.product.id);
   }
 
   kontynuujZakupy() {

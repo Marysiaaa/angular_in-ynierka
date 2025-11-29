@@ -17,7 +17,6 @@ export class IfAuthenticatedDirective {
     private readonly _authService: AuthService = inject(AuthService);
 
     constructor() {
-        // TODO: Consider if effect is needed at all - will login/logout always trigger page refresh/redirect?
         effect((): void => {
             this._viewContainerRef.clear();
 

@@ -28,9 +28,11 @@ export class ClientsOrdersComponent implements AfterViewInit {
 
   constructor() {
     this._ordersService
-      .getAll()
+      .getClientOrders()
       .pipe(take(1), takeUntilDestroyed())
       .subscribe((data: Order[]): void => {
+        console.log('Ladowanie zamówień klientów')
+        console.log(data);
         this.dataSource.data = data;
       });
   }

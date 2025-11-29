@@ -13,12 +13,12 @@
   <div class="products-grid">
     <div class="product-card" *ngFor="let p of filteredProducts">
 
-      <img src="https://via.placeholder.com/200" alt="{{ p.NameProduct }}">
+      <img src="https://via.placeholder.com/200" alt="{{ p.nameProduct }}">
 
-      <h3>{{ p.NameProduct }}</h3>
+      <h3>{{ p.nameProduct }}</h3>
 
-      <p>Cena: {{ p.PriceProduct }} zł</p>
-      <p>Ilość: {{ p.QuantityProduct }}</p>
+      <p>Cena: {{ p.priceProduct }} zł</p>
+      <p>Ilość: {{ p.quantityProduct }}</p>
 
       <button class="buy-btn" (click)="buy(p)">Kup teraz
       </button>
