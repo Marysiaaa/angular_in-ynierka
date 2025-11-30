@@ -60,16 +60,16 @@ export class BasketComponent implements OnInit, AfterViewInit {
   }
   changeQty(item: BasketItem, diff: number) {
     if (diff === 1) {
-      this.basketService.increaseQuantity(item.product.id);
+      this.basketService.increaseQuantity(item.productId);
     } else {
-      this.basketService.decreaseQuantity(item.product.id);
+      this.basketService.decreaseQuantity(item.productId);
     }
 
     this.updateTotal();
   }
 
   remove(item: BasketItem) {
-    this.basketService.removeItem(item.product.id);
+    this.basketService.removeItem(item.productId);
     this.updateTotal();
   }
 
