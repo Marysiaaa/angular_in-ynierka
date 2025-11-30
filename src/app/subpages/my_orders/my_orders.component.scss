@@ -52,6 +52,7 @@ tr:hover {
 }
 
 /* Statusy */
+
 td .status {
   display: inline-block;
   padding: 5px 10px;
@@ -61,19 +62,75 @@ td .status {
   text-align: center;
 }
 
+
 .status.in-progress {
-  background-color: #f0ad4e;
-  color: #fff;
+  background-color: #f0ad4e; /* pomarańczowy */
+}
+
+.status.shipped {
+  background-color: #0275d8; /* niebieski */
 }
 
 .status.delivered {
-  background-color: #5cb85c;
-  color: #fff;
+  background-color: #5cb85c; /* zielony */
+}
+
+.status.paid {
+  background-color: #17a2b8; /* turkusowy */
+}
+
+.status.canceled {
+  background-color: #d9534f; /* czerwony */
 }
 
 /* Sortowanie */
 th.mat-sort-header-sorted {
   color: #333;
+}
+
+.pay-btn,
+.cancel-btn {
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: 0.25s ease;
+  display: inline-block;
+  min-width: 150px;
+  text-align: center;
+}
+
+//PRZYCISK OPŁAĆ
+.pay-btn {
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+//PRZYCISK ANULUJ
+.cancel-btn {
+  background-color: #dc3545;
+
+  &:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 }
 
 /* Responsive */

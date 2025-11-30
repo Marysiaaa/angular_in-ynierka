@@ -24,15 +24,53 @@
     <span class="status"
           [ngClass]="{
             'in-progress': element.statusOrder === StatusOrder.InProgress,
-            'delivered': element.statusOrder === StatusOrder.Delivered
+            'delivered': element.statusOrder === StatusOrder.Delivered,
+            'canceled':element.statusOrder===StatusOrder.Canceled,
+            'paid':element.statusOrder===StatusOrder.PAID
           }">
       {{ element.statusOrder | statusOrder }}
     </span>
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="PayOrder">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="pay-btn" (click)="payOrder(row)">
+          Opłać zamówienie
+        </button>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="CancelOrder">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button class="cancel-btn" (click)="cancelOrder(row)">
+          Anuluj zamówienie
+        </button>
+      </td>
+    </ng-container>
+
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
   </table>
+
+
+  <div *ngIf="showSuccess" class="toast success">
+    {{ message }}
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+  <div *ngIf="showError" class="toast error">
+    {{ message }}
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
+  <div *ngIf="showCancel" class="toast cancel">
+    {{ message }}
+    <button (click)="closePopup()">Zamknij</button>
+  </div>
+
 </div>

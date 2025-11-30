@@ -62,25 +62,23 @@ td .status {
 }
 
 .status.in-progress {
-  background-color: #f0ad4e;
-  color: #fff;
+  background-color: #f0ad4e; /* pomarańczowy */
+}
+
+.status.shipped {
+  background-color: #0275d8; /* niebieski */
 }
 
 .status.delivered {
-  background-color: #5cb85c;
-  color: #fff;
+  background-color: #5cb85c; /* zielony */
 }
-.status.shipped {
-  background-color: #f0ad4e;
-  color: #fff;
+
+.status.paid {
+  background-color: #17a2b8; /* turkusowy */
 }
+
 .status.canceled {
-  background-color: #f0ad4e;
-  color: #fff;
-}
-.status.shipped {
-  background-color: #f0ad4e;
-  color: #fff;
+  background-color: #d9534f; /* czerwony */
 }
 
 

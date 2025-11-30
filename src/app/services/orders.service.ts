@@ -34,4 +34,24 @@ export class OrdersService {
     return this.http.get<Order[]>(`${this.apiUrl}/api/clientOrders`, {headers});
   };
 
+
+  payOrder(order: Order): Observable<Order> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<Order>(`${this.apiUrl}/api/orders/${order.orderId}/pay`, {}, { headers });
+  }
+
+  cancelOrder(order: Order): Observable<Order> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post<Order>(`${this.apiUrl}/api/orders/${order.orderId}/cancel`, {}, { headers });
+  }
+
+
 }

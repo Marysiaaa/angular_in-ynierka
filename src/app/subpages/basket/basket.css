@@ -123,3 +123,39 @@ table {
   box-shadow: none;
 }
 
+
+
+
+.pay-btn, .cancel-btn {
+  padding: 6px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease;
+  color: #fff;
+  display: inline-block;
+}
+
+/* Zielony – Opłać zamówienie */
+.pay-btn {
+  background-color: #28a745;
+
+  &:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Czerwony – Anuluj zamówienie */
+.cancel-btn {
+  background-color: #dc3545;
+
+  &:hover {
+    background-color: #c82333;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+}
