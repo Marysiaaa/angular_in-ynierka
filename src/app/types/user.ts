@@ -1,11 +1,11 @@
 
 interface User {
-  UserId: number;
-  Name:string;
-  Surname: string;
-  Email: string;
-  PhoneNumber: string;
-  RegistrationDate: string;
+  sponsorId: string;
+  name:string;
+  surname: string;
+  email: string;
+  phoneNumber: string;
+  registrationDate: string;
 }
 
 export type {User};

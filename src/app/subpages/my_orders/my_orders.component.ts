@@ -8,12 +8,12 @@ import {Order, StatusOrder} from "../../types/order";
 import { take } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatIconModule } from "@angular/material/icon";
-import {NgClass} from '@angular/common';
+import {DatePipe, NgClass} from '@angular/common';
 import {StatusOrderPipe} from '../../pipes/status-order.pipe';
 
 @Component({
   selector: "cp-my-orders",
-  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass, StatusOrderPipe],
+  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass, StatusOrderPipe, DatePipe],
   templateUrl: "./my_orders.component.html",
   styleUrls: ["./my_orders.component.scss"]
 })

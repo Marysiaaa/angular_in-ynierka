@@ -37,7 +37,8 @@ export class WalletComponent implements AfterViewInit {
   private readonly _liveAnnouncer = inject(LiveAnnouncer);
 
   constructor() {
-    this._operationService.getAll()
+
+    this._operationService.GetOperations()
       .pipe(take(1), takeUntilDestroyed())
       .subscribe(data => this.dataSource.data = data);
   }

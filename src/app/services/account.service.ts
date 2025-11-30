@@ -1,27 +1,25 @@
-import {Injectable} from "@angular/core";
-import {Observable, of} from "rxjs";
-import {User} from "../types/user";
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import {User} from '../types/user';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environment';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
-export class PersonService {
+export class AccountService {
   private apiUrl: string = environment.apiUrl;
 
 
   constructor(private http: HttpClient) {
   }
 
-
-  GetUsers(): Observable<User[]> {
+  GetMyAccount(): Observable<User[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<User[]>(`${this.apiUrl}/api/Users/users`, {headers});
+    return this.http.get<User[]>(`${this.apiUrl}/api/account/me`, {headers});
   };
-
 }

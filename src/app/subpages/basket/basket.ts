@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild, inject} from '@angular/core';
 import {MatTable, MatTableDataSource, MatTableModule} from '@angular/material/table';
 import {MatSort, MatSortModule} from '@angular/material/sort';
-import {BasketItem} from '../../types/basketItem';
+import {BasketProduct} from '../../types/basketProduct';
 import {CurrencyPipe, NgIf} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -27,7 +27,7 @@ import {BasketService} from '../../services/basket.service';
 export class BasketComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) matSort!: MatSort;
-  @ViewChild(MatTable) table!: MatTable<BasketItem>;
+  @ViewChild(MatTable) table!: MatTable<BasketProduct>;
 
   displayedColumns: string[] = [
     "NameProduct",
@@ -37,18 +37,18 @@ export class BasketComponent implements OnInit, AfterViewInit {
     "Actions"
   ];
 
-  dataSource: MatTableDataSource<BasketItem> = new MatTableDataSource<BasketItem>();
+  dataSource: MatTableDataSource<BasketProduct> = new MatTableDataSource<BasketProduct>();
 
   constructor(
     private basketService: BasketService,
     private router: Router,
   ) {}
 
-  basketItems: BasketItem[] = [];
+  basketItems: BasketProduct[] = [];
   total: number = 0;
 
   ngOnInit() {
-    this.basketService.basketItems$.subscribe((items: BasketItem[]) => {
+    this.basketService.basketItems$.subscribe((items: BasketProduct[]) => {
       this.dataSource.data = items;
       this.basketItems = items;
       this.updateSummary();
@@ -58,7 +58,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.dataSource.sort = this.matSort;
   }
-  changeQty(item: BasketItem, diff: number) {
+  changeQty(item: BasketProduct, diff: number) {
     if (diff === 1) {
       this.basketService.increaseQuantity(item.productId);
     } else {
@@ -68,7 +68,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
     this.updateTotal();
   }
 
-  remove(item: BasketItem) {
+  remove(item: BasketProduct) {
     this.basketService.removeItem(item.productId);
     this.updateTotal();
   }

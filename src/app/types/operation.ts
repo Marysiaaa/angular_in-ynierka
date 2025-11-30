@@ -1,8 +1,8 @@
 interface Operation {
 
-  OperationDate:string;
-  Amount: number;
-  OperationType: string;
+  operationDate:string;
+  amount: number;
+  operationType: string;
 }
 
 export type {Operation};

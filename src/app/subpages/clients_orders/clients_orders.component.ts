@@ -8,11 +8,11 @@ import {Order} from "../../types/order";
 import { take } from "rxjs";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatIconModule } from "@angular/material/icon";
-import {NgClass} from '@angular/common';
+import {DatePipe, NgClass} from '@angular/common';
 
 @Component({
   selector: "cp-cliests-orders",
-  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass],
+  imports: [MatTableModule, MatSortModule, MatIconModule, NgClass, DatePipe],
   templateUrl: "./clients_orders.component.html",
   styleUrl: "./clients_orders.component.scss"
 })

@@ -1,39 +1,34 @@
-<div class="my-account-container">
+<div class="my-account-container" *ngIf="user">
 
   <div class="user-card">
     <div class="avatar">
       <img src="graphics/ikona.png" alt="User icon" class="avatar">
-
     </div>
 
     <div class="user-name">
-      Maria Oleksińska
+      {{ user.name}} {{ user.surname }}
     </div>
 
     <div class="user-info-box">
-      <div class="info-row">
-        <span class="label">ID:</span>
-        <span class="value">12345</span>
-      </div>
 
       <div class="info-row">
-        <span class="label">Login:</span>
-        <span class="value">maria</span>
+        <span class="label">ID:</span>
+        <span class="value">{{ user.id }}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Sponsor:</span>
-        <span class="value">Anna K.</span>
+        <span class="value">{{ user.sponsorName }}</span>
       </div>
 
       <div class="info-row">
         <span class="label">Posiadana ranga:</span>
-        <span class="value"><em>Dystybutor</em></span>
+        <span class="value"><em>{{ user.rank }}</em></span>
       </div>
 
       <div class="info-row">
         <span class="label">Data rejestracji:</span>
-        <span class="value"><strong>01.11.2024</strong></span>
+        <span class="value"><strong>{{ user.registrationDate | date:'dd.MM.yyyy' }}</strong></span>
       </div>
 
     </div>
@@ -44,21 +39,13 @@
   </p>
 
   <div class="ref-box">
-    <input
-      type="text"
-      class="ref-link-input"
-      [value]="referralLink"
-      readonly
-    >
-    <button class="copy-btn" (click)="copyReferralLink()">
-      Kopiuj link
-    </button>
+    <input type="text" class="ref-link-input" [value]="referralLink" readonly>
+    <button class="copy-btn" (click)="copyReferralLink()">Kopiuj link</button>
   </div>
-
 
   <div *ngIf="showPopup" class="toast">
-    Twoj link został skopiowany!
+    Twój link został skopiowany!
     <button (click)="closePopup()">Zamknij</button>
-
   </div>
+
 </div>

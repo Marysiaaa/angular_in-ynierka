@@ -44,7 +44,7 @@ export class HomeComponent {
 
   buy(product: Product) {
     if (product.quantityProduct > 0) {
-      this.basketService.addItem({
+      this.basketService.addProduct({
         ...product,
         quantityProduct: 1
       });

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {BasketItem} from '../types/basketItem';
+import {Basket, BasketProduct} from '../types/basketProduct';
 import {Product, ProductCategory} from '../types/product';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environment';
@@ -11,7 +11,7 @@ import {environment} from '../../environment';
 export class BasketService {
   private apiUrl: string = environment.apiUrl;
   private basketId: string | undefined;  // <- tutaj podaj swój koszyk
-  private basketItems = new BehaviorSubject<BasketItem[]>([]);
+  private basketItems = new BehaviorSubject<BasketProduct[]>([]);
   basketItems$ = this.basketItems.asObservable();
 
   constructor(private http: HttpClient) {
@@ -21,39 +21,39 @@ export class BasketService {
     });
 
     this.http
-      .get<string>(`${this.apiUrl}/api/users/myBasket`, { headers })
+      .get<Basket>(`${this.apiUrl}/api/users/myBasket`, { headers })
       .subscribe({
-        next: id => {
-          this.basketId = id;
+        next: basket => {
+          this.basketId = basket.id;
           console.log("basketId", this.basketId);
+          this.basketItems.next(basket.basketProducts);
 
-          this.loadBasket();
         },
         error: err => console.error("Błąd pobierania koszyka", err)
       });
   }
 
-  getItems(): BasketItem[] {
+  getItems(): BasketProduct[] {
     return this.basketItems.value;
   }
 
-  setItems(items: BasketItem[]) {
+  setItems(items: BasketProduct[]) {
     this.basketItems.next(items);
   }
 
-  addItem(product: Product) {
+  addProduct(product: Product) {
     const items = this.getItems();
     const existing = items.find(i => i.productId === product.id);
 
     if (existing) {
-      existing.quantity++;
-      existing.totalAmount = existing.quantity * existing.price;
+      existing.quantityProduct++;
+      existing.totalAmount = existing.quantityProduct * existing.priceProduct;
     } else {
       items.push({
         productId: product.id,
-        name: product.nameProduct,
-        quantity: 1,
-        price: product.priceProduct,
+        nameProduct: product.nameProduct,
+        quantityProduct: 1,
+        priceProduct: product.priceProduct,
         totalAmount: product.priceProduct
       });
     }
@@ -66,9 +66,12 @@ export class BasketService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    return this.http.patch(
-      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/increase`, {headers}
-    ).subscribe(() => {
+    this.http.patch(`${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/increase`,
+      {},
+      { headers }
+    )
+
+.subscribe(() => {
       this.updateLocalQuantity(productId, +1);
     });
   }
@@ -90,11 +93,11 @@ export class BasketService {
   private updateLocalQuantity(productId: string, diff: number) {
     const updated = this.getItems().map(item => {
       if (item.productId === productId) {
-        const qty = Math.max(item.quantity + diff, 1);
+        const qty = Math.max(item.quantityProduct + diff, 1);
         return {
           ...item,
           quantityProduct: qty,
-          totalAmount: qty * item.price
+          totalAmount: qty * item.priceProduct
         };
       }
       return item;
@@ -105,7 +108,7 @@ export class BasketService {
 
   getTotal() {
     return this.getItems()
-      .reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      .reduce((sum, item) => sum + (item.priceProduct * item.quantityProduct), 0);
   }
   removeItem(productId: string) {
     const token = localStorage.getItem('token');
@@ -133,10 +136,10 @@ export class BasketService {
     });
 
     this.http
-      .get<BasketItem[]>(`${this.apiUrl}/api/baskets`, {headers})
+      .get<{ id: string; basketProducts: BasketProduct[] }>(`${this.apiUrl}/api/baskets/${this.basketId}`, { headers })
       .subscribe({
-        next: basketItems => {
-          this.basketItems.next(basketItems);
+        next: basket => {
+          this.basketItems.next(basket.basketProducts);
         },
         error: err => console.error("Błąd pobierania koszyka", err)
       });

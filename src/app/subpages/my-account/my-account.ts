@@ -1,31 +1,48 @@
-import { Component } from '@angular/core';
-import {NgIf} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import {AccountService} from '../../services/account.service';
+import {DatePipe, NgIf} from '@angular/common';
+
 
 @Component({
   selector: 'app-my-account',
-  imports: [
-    NgIf
-  ],
+  standalone: true,
+  imports: [NgIf, DatePipe],
   templateUrl: './my-account.html',
-  styleUrl: './my-account.css'
+  styleUrls: ['./my-account.css']
 })
-export class MyAccountComponent {
+export class MyAccountComponent implements OnInit {
 
-  referralLink: string = 'https://BelleRose.pl/maria';
+  user: any;
+  referralLink: string = '';
   showPopup = false;
+
+  constructor(private accountService: AccountService) {}
+
+  ngOnInit(): void {
+    this.loadUser();
+  }
+
+  loadUser() {
+    this.accountService.GetMyAccount().subscribe({
+      next: (data) => {
+        this.user = data;
+
+        // Twój link polecający (np. domena/link)
+        this.referralLink = `https://BelleRose.pl/${this.user.id}`;
+      },
+      error: () => {
+        console.error("Nie udało się pobrać danych.");
+      }
+    });
+  }
 
   copyReferralLink() {
     navigator.clipboard.writeText(this.referralLink).then(() => {
-      this.showPopup = true; // pokaż popup
-    }).catch(err => {
-      console.error('Nie udało się skopiować linku', err);
+      this.showPopup = true;
     });
   }
 
   closePopup() {
-    this.showPopup = false; // zamknij popup
+    this.showPopup = false;
   }
 }
-
-
-

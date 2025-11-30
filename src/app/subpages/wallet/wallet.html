@@ -23,15 +23,15 @@
 
       <ng-container matColumnDef="OperationDate">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Data transakcji</th>
-        <td mat-cell *matCellDef="let element">{{ element.OperationDate }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.operationDate }}</td>
       </ng-container>
       <ng-container matColumnDef="Amount">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Kwota</th>
-        <td mat-cell *matCellDef="let element">{{ element.Amount }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
       </ng-container>
       <ng-container matColumnDef="OperationType">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Typ operacji</th>
-        <td mat-cell *matCellDef="let element">{{ element.OperationType}}</td>
+        <td mat-cell *matCellDef="let element">{{ element.operationType}}</td>
       </ng-container>
 
     </table>
