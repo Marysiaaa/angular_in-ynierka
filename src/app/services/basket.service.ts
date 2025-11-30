@@ -15,19 +15,20 @@ export class BasketService {
   basketItems$ = this.basketItems.asObservable();
 
   constructor(private http: HttpClient) {
+    console.log('loading basket service')
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
     this.http
-      .get<Basket>(`${this.apiUrl}/api/users/myBasket`, { headers })
+      .get<Basket>(`${this.apiUrl}/api/users/myBasket`, {headers})
       .subscribe({
         next: basket => {
+          console.log("basket", basket);
           this.basketId = basket.id;
-          console.log("basketId", this.basketId);
           this.basketItems.next(basket.basketProducts);
-
+          console.log("basketItems", this.basketItems.value);
         },
         error: err => console.error("Błąd pobierania koszyka", err)
       });
@@ -46,19 +47,27 @@ export class BasketService {
     const existing = items.find(i => i.productId === product.id);
 
     if (existing) {
-      existing.quantityProduct++;
-      existing.totalAmount = existing.quantityProduct * existing.priceProduct;
+      this.increaseQuantity(product.id);
     } else {
-      items.push({
-        productId: product.id,
-        nameProduct: product.nameProduct,
-        quantityProduct: 1,
-        priceProduct: product.priceProduct,
-        totalAmount: product.priceProduct
+      const token = localStorage.getItem('token');
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
       });
-    }
+      const body = {productId: product.id};
+      this.http.post(`${this.apiUrl}/api/baskets/${this.basketId}/basketProducts`, body, {headers})
+        .subscribe(() => {
+          console.log('Dodano produkt do koszyka: ', product.nameProduct, ' (id: ', product.id, '')
+          items.push({
+            productId: product.id,
+            nameProduct: product.nameProduct,
+            quantityProduct: 1,
+            priceProduct: product.priceProduct,
+            totalAmount: product.priceProduct
+          });
+          this.setItems([...items])
 
-    this.setItems([...items])
+        });
+    }
   }
 
   increaseQuantity(productId: string) {
@@ -66,12 +75,10 @@ export class BasketService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    this.http.patch(`${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/increase`,
-      {},
-      { headers }
-    )
-
-.subscribe(() => {
+    this.http.patch(`${this.apiUrl}/api/baskets/${this.basketId}/basketProducts/${productId}/increase`,
+      null,
+      {headers}
+    ).subscribe(() => {
       this.updateLocalQuantity(productId, +1);
     });
   }
@@ -83,7 +90,8 @@ export class BasketService {
     });
 
     return this.http.patch(
-      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}/decrease`,
+      `${this.apiUrl}/api/baskets/${this.basketId}/basketProducts/${productId}/decrease`,
+      null,
       {headers}
     ).subscribe(() => {
       this.updateLocalQuantity(productId, -1);
@@ -108,8 +116,9 @@ export class BasketService {
 
   getTotal() {
     return this.getItems()
-      .reduce((sum, item) => sum + (item.priceProduct * item.quantityProduct), 0);
+      .reduce((sum, item) => sum + item.totalAmount, 0);
   }
+
   removeItem(productId: string) {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
@@ -117,7 +126,7 @@ export class BasketService {
     });
 
     return this.http.delete(
-      `${this.apiUrl}/baskets/${this.basketId}/basketProducts/${productId}`, {headers}
+      `${this.apiUrl}/api/baskets/${this.basketId}/basketProducts/${productId}`, {headers}
     ).subscribe(() => {
       const newItems = this.getItems().filter(i => i.productId !== productId);
       this.setItems(newItems);
@@ -136,7 +145,7 @@ export class BasketService {
     });
 
     this.http
-      .get<{ id: string; basketProducts: BasketProduct[] }>(`${this.apiUrl}/api/baskets/${this.basketId}`, { headers })
+      .get<{ id: string; basketProducts: BasketProduct[] }>(`${this.apiUrl}/api/baskets/${this.basketId}`, {headers})
       .subscribe({
         next: basket => {
           this.basketItems.next(basket.basketProducts);

@@ -31,8 +31,6 @@ export class HomeComponent {
       this.products = data;
     });}
 
-
-
   get filteredProducts(): Product[] {
     const selectedCategory =
       this.selectedTab === 'dlaNiej'
@@ -44,11 +42,7 @@ export class HomeComponent {
 
   buy(product: Product) {
     if (product.quantityProduct > 0) {
-      this.basketService.addProduct({
-        ...product,
-        quantityProduct: 1
-      });
-
+      this.basketService.addProduct(product);
       product.quantityProduct -= 1;
       this.showPopup = true;
     } else {
