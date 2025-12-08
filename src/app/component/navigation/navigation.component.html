@@ -69,6 +69,30 @@
 
       </ul>
     </li>
+
+
+
+    <li class="dropdown">
+      <a [routerLink]="RoutePath.HOME" class="link">
+        <div class="link__name">Panel administratora</div>
+      </a>
+
+      <ul class="dropdown__menu">
+        <li>
+          <a [routerLink]="RoutePath.ORDERS" class="dropdown__item">
+            <span>Zamówienia</span>
+          </a>
+        </li>
+        <li>
+          <a [routerLink]="RoutePath.PRODUCTS" class="dropdown__item">
+            <span>Produkty</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+
+
+
     <li>
       <a [routerLink]="RoutePath.BASKET" class="link">
         <div class="link__name">Koszyk</div>

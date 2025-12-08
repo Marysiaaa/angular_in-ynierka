@@ -153,4 +153,7 @@ export class BasketService {
         error: err => console.error("Błąd pobierania koszyka", err)
       });
   }
+  getBasketId(): string | undefined {
+    return this.basketId;
+  }
 }

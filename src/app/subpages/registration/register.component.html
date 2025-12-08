@@ -1,0 +1,112 @@
+<div class="page-wrap">
+
+  <div class="form-shell">
+    <h1>Witaj, jest nam niezmiernie miło, że postanowiłeś dołączyć do grona naszych Partnerów Biznesowych.</h1>
+
+    <div class="card">
+      <h2 class="card-title">Dane dotyczące konta</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+
+        <div class="row">
+          <label>Imię
+            <input type="text" formControlName="firstName" />
+          </label>
+          <div class="error" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
+            <small *ngIf="form.get('firstName')?.errors?.['required']">Imię jest wymagane.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Nazwisko
+            <input type="text" formControlName="lastName" />
+          </label>
+          <div class="error" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
+            <small *ngIf="form.get('lastName')?.errors?.['required']">Nazwisko jest wymagane.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>E-mail
+            <input type="email" formControlName="email" />
+          </label>
+          <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+            <small *ngIf="form.get('email')?.errors?.['required']">Email jest wymagany.</small>
+            <small *ngIf="form.get('email')?.errors?.['email']">Nieprawidłowy email.</small>
+          </div>
+        </div>
+
+        <div class="row password-row">
+          <label>Hasło
+            <div class="password-field">
+              <input [type]="showPassword ? 'text' : 'password'" formControlName="password" />
+              <button type="button" class="eye" (click)="togglePassword()" [attr.aria-pressed]="showPassword">
+                {{ showPassword ? 'Ukryj' : 'Pokaż' }}
+              </button>
+            </div>
+          </label>
+          <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+            <small *ngIf="form.get('password')?.errors?.['required']">Hasło jest wymagane.</small>
+            <small *ngIf="form.get('password')?.errors?.['minlength']">Minimum 8 znaków.</small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Potwierdź hasło
+            <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" />
+          </label>
+          <div class="error" *ngIf="form.errors?.['passwordMismatch'] && (form.get('confirmPassword')?.touched || form.get('password')?.touched)">
+            <small>Hasła nie są zgodne.</small>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <div>
+            <label>Ulica
+              <input type="text" formControlName="street" />
+            </label>
+          </div>
+          <div>
+            <label>Numer budynku
+              <input type="text" formControlName="buildingNumber" />
+            </label>
+          </div>
+        </div>
+
+        <div class="two-cols">
+          <div>
+            <label>Kod pocztowy
+              <input type="text" formControlName="postalCode" />
+            </label>
+            <div class="error" *ngIf="form.get('postalCode')?.touched && form.get('postalCode')?.invalid">
+              <small *ngIf="form.get('postalCode')?.errors?.['pattern']">Format: 00-000</small>
+            </div>
+          </div>
+          <div>
+            <label>Miasto
+              <input type="text" formControlName="city" />
+            </label>
+          </div>
+        </div>
+
+        <div class="checkbox-row">
+          <label class="checkbox">
+            <input type="checkbox" formControlName="acceptTerms" />
+            Akceptuję Regulamin Belle rosse
+          </label>
+          <div class="error" *ngIf="form.get('acceptTerms')?.touched && form.get('acceptTerms')?.invalid">
+            <small>Musisz zaakceptować regulamin.</small>
+          </div>
+        </div>
+
+        <div *ngIf="sponsorName" class="info-sponsor">
+          Rejestrujesz się z polecenia: <strong>{{ sponsorName }}</strong>
+        </div>
+
+        <div class="submit-row">
+          <button type="submit" [disabled]="form.invalid">Potwierdź</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

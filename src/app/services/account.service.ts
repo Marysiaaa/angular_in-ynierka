@@ -14,6 +14,14 @@ export class AccountService {
   constructor(private http: HttpClient) {
   }
 
+  register(data: any): Observable<any> {
+    console.log("rejestracja")
+    return this.http.post(`${this.apiUrl}/api/Account/register`, data);
+  }
+  getSponsorByRef(ref: string) {
+    return this.http.get<any>(`${this.apiUrl}/Account/GetSponsorByRef?ref=${ref}`);
+  }
+
   GetMyAccount(): Observable<User[]> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({

@@ -91,8 +91,41 @@ export class BasketComponent implements OnInit, AfterViewInit {
   showPopup = false;
 
   zlozZamowienie() {
-    this.showPopup = true; // pokaz popup
+    const basketId = this.basketService.getBasketId(); // <-- pobierz id koszyka
+    if (!basketId) {
+      alert('Nie znaleziono koszyka!');
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+
+    fetch(`http://localhost:5031/api/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ basketId })
+    })
+      .then(async response => {
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Zamówienie utworzone, Id:', result.id);
+          this.showPopup = true;            // pokaz popup sukcesu
+          this.basketService.setItems([]);  // wyczyść koszyk
+          this.updateTotal();
+        } else {
+          const error = await response.text();
+          console.error('Błąd tworzenia zamówienia:', error);
+          alert('Nie udało się złożyć zamówienia');
+        }
+      })
+      .catch(err => {
+        console.error('Błąd sieci:', err);
+        alert('Błąd sieci przy tworzeniu zamówienia');
+      });
   }
+
 
   closePopup() {
     this.showPopup = false; // zamknij popup

@@ -2,7 +2,7 @@ import {ApplicationConfig} from '@angular/core';
 import {Routes, provideRouter} from '@angular/router';
 import {LoginComponent} from './login/login.component';
 import {comment} from 'postcss';
-import {OrdersComponent} from './subpages/my_orders/my_orders.component';
+import {MyOrdersComponent} from './subpages/my_orders/my_orders.component';
 import {ClientsOrdersComponent} from './subpages/clients_orders/clients_orders.component';
 import {PersonComponent} from './subpages/person/person.component';
 import {AuthService} from './services/auth.service';
@@ -13,6 +13,9 @@ import {MyAccountComponent} from './subpages/my-account/my-account';
 import {WalletComponent} from './subpages/wallet/wallet';
 import {BasketComponent} from './subpages/basket/basket';
 import {provideHttpClient} from '@angular/common/http';
+import {Products} from './subpages/products/products';
+import {OrdersComponent} from './subpages/orders/orders';
+import {RegisterComponent} from './subpages/registration/register.component';
 
 
 const routes: Routes = [
@@ -28,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: "my_orders",
-    component: OrdersComponent,
+    component: MyOrdersComponent,
   },
   {
     path: "clients_orders",
@@ -57,7 +60,19 @@ const routes: Routes = [
     path: "basket",
     component: BasketComponent,
   },
+  {
+    path: "orders",
+    component: OrdersComponent,
+  },
+  {
+    path: "products",
+    component: Products,
+  },
 
+  {
+    path: "registration",
+    component: RegisterComponent,
+  }
 
 
 ];

@@ -11,5 +11,8 @@ export enum RoutePath {
   PERSON="/person",
   WALLET = "/wallet",
   BASKET = "/basket",
+  ORDERS = "/orders",
+  PRODUCTS = "/products",
+  REGISTRATION = "/registration",
 
 }

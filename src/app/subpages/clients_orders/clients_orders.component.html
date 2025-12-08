@@ -29,7 +29,9 @@
             'in-progress': element.statusOrder === StatusOrder.InProgress,
             'delivered': element.statusOrder === StatusOrder.Delivered,
             'canceled':element.statusOrder===StatusOrder.Canceled,
-            'paid':element.statusOrder===StatusOrder.PAID
+            'paid':element.statusOrder===StatusOrder.PAID,
+            'shipped':element.statusOrder===StatusOrder.Shipped
+
           }">
       {{ element.statusOrder | statusOrder }}
     </span>

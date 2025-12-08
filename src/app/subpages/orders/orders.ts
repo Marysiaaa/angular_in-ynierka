@@ -3,7 +3,6 @@ import {MatSort, MatSortModule} from "@angular/material/sort";
 import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {RoutePath} from "../../enums/route-path";
-import {OrdersService} from "../../services/orders.service";
 import {Order, StatusOrder} from "../../types/order";
 import {take} from "rxjs";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
@@ -11,9 +10,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {DatePipe, NgClass, NgIf} from '@angular/common';
 import {StatusOrderPipe} from '../../pipes/status-order.pipe';
 import {MatButtonModule} from "@angular/material/button";
+import {OrdersService} from '../../services/orders.service';
 
 @Component({
-  selector: "cp-my-orders",
+  selector: "cp-orders",
   imports: [
     MatTableModule,
     MatSortModule,
@@ -24,13 +24,13 @@ import {MatButtonModule} from "@angular/material/button";
     MatButtonModule,
     NgIf
   ],
-  templateUrl: "./my_orders.component.html",
-  styleUrls: ["./my_orders.component.scss"]
+  templateUrl: "./orders.html",
+  styleUrls: ["./orders.css"]
 })
-export class MyOrdersComponent implements AfterViewInit {
+export class OrdersComponent implements AfterViewInit {
   @ViewChild(MatSort)
   protected readonly matSort!: MatSort;
-  protected readonly displayedColumns: string[] = ["OrderId", "UserId", "OrderDate", "TotalAmount", "StatusOrder", "PayOrder", "CancelOrder"];
+  protected readonly displayedColumns: string[] = ["OrderId", "UserId", "OrderDate", "TotalAmount", "StatusOrder", "ShippOrder", "CancelOrder","DeliverOrder"];
   protected readonly dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
   protected readonly RoutePath: typeof RoutePath = RoutePath;
 
@@ -44,13 +44,13 @@ export class MyOrdersComponent implements AfterViewInit {
   showCanceledOrder = false;
 
 
+
   message = "";
 
 
   constructor() {
-    console.log('konstruktor')
     this._ordersService
-      .getAll()
+      .getAllOrders()
       .pipe(take(1), takeUntilDestroyed())
       .subscribe((data: Order[]): void => {
         console.log('Ladowanie danych')
@@ -69,30 +69,59 @@ export class MyOrdersComponent implements AfterViewInit {
 
   public StatusOrder = StatusOrder;
 
-  public payOrder(order: Order) {
+  public shippOrder(order: Order) {
     if(order.statusOrder==StatusOrder.Canceled) {
 
       this.showCanceledOrder = true;
-      this.message = "Nie możesz opłacić zamówienia, gdyż zostało anulowane. ";
+      this.message = "Nie możesz wysłac zamówienia, gdyż zostało anulowane. ";
 
     }
-    else if(order.statusOrder==StatusOrder.PAID){
-      this.showPaidOrder = true;
-      this.message = "Nie możesz opłacić ponownie zamówienia, gdyż zostało już opłacone ";
+    else if(order.statusOrder==StatusOrder.Shipped){
+      this.showCanceledOrder = true;
+      this.message = "Nie możesz wysłać ponownie zamówienia, gdyż zostało już wysłane ";
     }
+    else if(order.statusOrder==StatusOrder.Delivered){
+      this.showCanceledOrder = true;
+      this.message = "Nie możesz wysłać zamówienia, gdyż ono już zostało dostarczone ";
+
+    }
+
     else
-    this._ordersService.shippOrder(order).pipe(take(1)).subscribe({
-      next: () => {
-        order.statusOrder = StatusOrder.PAID;
-        this.showSuccess = true;
-        this.message = "Zamówienie zostało opłacone!";
+      this._ordersService.shippOrder(order).pipe(take(1)).subscribe({
+        next: () => {
+          order.statusOrder = StatusOrder.Shipped;
+          this.showSuccess = true;
+          this.message = "Zamówienie zostało wysłane!";
 
-      },
-      error: () => {
-        this.showError = true;
-        this.message = "Wystąpił błąd podczas opłacania zamówienia.";
-      }
-    });
+        },
+        error: () => {
+          this.showError = true;
+          this.message = "Wystąpił błąd podczas opłacania zamówienia.";
+        }
+      });
+  }
+
+  public deliverOrder(order: Order) {
+
+    if (order.statusOrder == StatusOrder.Canceled) {
+      this.showCanceledOrder = true;
+      this.message = "Nie możesz dostarczyć anulowanego zamówienia ";
+    } else if (order.statusOrder == StatusOrder.InProgress) {
+  this.showShippedOrder = true;
+  this.message = "Nie możesz dostarczyć zamówienia, gdyż Twoje zamówienie nie jest jeszcze opłacone ";
+
+}else
+      this._ordersService.deliveredOrder(order).pipe(take(1)).subscribe({
+        next: () => {
+          order.statusOrder = StatusOrder.Delivered;
+          this.showCancel = true;
+          this.message = "Zamówienie zostało dostarczone.";
+        },
+        error: () => {
+          this.showError = true;
+          this.message = "Nie udało się dostarczyć  zamówienia.";
+        }
+      });
   }
 
   public cancelOrder(order: Order) {
@@ -103,8 +132,12 @@ export class MyOrdersComponent implements AfterViewInit {
     } else if (order.statusOrder == StatusOrder.Shipped) {
       this.showShippedOrder = true;
       this.message = "Nie możesz anulować zamówienia, gdyż zostało już wysłane do Ciebie ";
+    } else if (order.statusOrder == StatusOrder.Delivered) {
+      this.showShippedOrder = true;
+      this.message = "Nie możesz anulować zamówienia,które zostało już dostarczone";
+
     } else
-      this._ordersService.deliveredOrder(order).pipe(take(1)).subscribe({
+      this._ordersService.cancelOrder(order).pipe(take(1)).subscribe({
         next: () => {
           order.statusOrder = StatusOrder.Canceled;
           this.showCancel = true;
@@ -121,7 +154,7 @@ export class MyOrdersComponent implements AfterViewInit {
     this.showSuccess = false;
     this.showError = false;
     this.showCancel = false;
-    this.showPaidOrder = false;
+    this.showCanceledOrder = false;
     this.showShippedOrder = false;
     this.showCanceledOrder = false;
 
