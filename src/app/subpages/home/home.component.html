@@ -13,7 +13,9 @@
   <div class="products-grid">
     <div class="product-card" *ngFor="let p of filteredProducts">
 
-      <img src="https://via.placeholder.com/200" alt="{{ p.nameProduct }}">
+      <img
+        [src]="selectedTab === 'dlaNiej' ? 'graphics/perfumy-damskie.png' : 'graphics/perfumy-meskie.png'"
+        alt="{{ p.nameProduct }}">
 
       <h3>{{ p.nameProduct }}</h3>
 

@@ -3,6 +3,7 @@ import {Observable, of} from "rxjs";
 import {User} from "../types/user";
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from '../../environment';
+import {SponsorDetails} from '../types/sponsorDetails';
 
 @Injectable({
   providedIn: "root"
@@ -12,6 +13,9 @@ export class PersonService {
 
 
   constructor(private http: HttpClient) {
+  }
+  getSponsorByRef(ref: string): Observable<SponsorDetails> {
+    return this.http.get<SponsorDetails>(`${this.apiUrl}/Users/GetSponsorByRef?ref=${ref}`);
   }
 
 

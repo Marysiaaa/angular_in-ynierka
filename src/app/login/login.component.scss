@@ -5,8 +5,9 @@ body {
   height: 100vh;
   font-family: 'Poppins', sans-serif;
   background-color: #faf9fb;
+  display: flex; /* aby center działało w pionie */
   align-items: center;
-
+  justify-content: center;
 }
 
 /* Kontener formularza */
@@ -15,50 +16,50 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
-
+  min-height: 70vh; /* pełna wysokość ekranu */
 }
 
 /* Główne pudełko */
 .login-box {
   background-color: #efe9f1;
-  padding: 50px 60px;
-
-
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px 50px;
+  box-shadow: 0 6px 5px rgba(0, 0, 0, 0.1);
   text-align: center;
-  width: 360px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ // gap: 15px; /* odstępy między elementami */
 }
 
 /* Logo */
 .logo {
-  max-width: 80%;
+  max-width: 200px; /* lepsza proporcja w stosunku do boxa */
   height: auto;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
-
 
 /* Pola formularza */
 .login-box input {
   width: 100%;
   padding: 12px;
-  margin: 10px 0;
+  margin: 5px 0;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #f5eff7;
   font-size: 14px;
   text-align: center;
   outline: none;
 }
 
-/* Przycisk logowanie*/
+/* Przycisk logowania */
 .login-box button {
   background-color: #8b1d61;
   color: white;
   border: none;
   border-radius: 25px;
-  padding: 10px 40px;
-  margin-top: 15px;
+  padding: 12px 40px;
+  margin-top: 10px;
   font-size: 14px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -68,10 +69,25 @@ body {
   background-color: #a62c77;
 }
 
+/* Komunikat błędu */
+.error-message {
+  color: red;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
 /* Responsywność */
 @media (max-width: 480px) {
   .login-box {
     width: 90%;
-    padding: 30px;
+    padding: 25px;
+  }
+
+  .logo {
+    max-width: 100px;
+  }
+
+  .login-box button {
+    padding: 10px 30px;
   }
 }

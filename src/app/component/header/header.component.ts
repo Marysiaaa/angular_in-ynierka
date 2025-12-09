@@ -9,7 +9,7 @@ import {NavigationComponent} from '../navigation/navigation.component';
 
 @Component({
   selector: "cp-header",
-  imports: [NgOptimizedImage, MatButtonModule, IfAuthenticatedDirective, RouterLink, NavigationComponent],
+  imports: [ MatButtonModule, IfAuthenticatedDirective, RouterLink, NavigationComponent],
   templateUrl: "./header.component.html",
   styleUrl: "./header.component.scss"
 })

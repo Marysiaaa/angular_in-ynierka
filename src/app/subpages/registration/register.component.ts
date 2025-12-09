@@ -1,15 +1,18 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {
   FormBuilder,
   FormGroup,
   Validators,
   AbstractControl,
-  ValidationErrors, ReactiveFormsModule
+  ValidationErrors,
+  ReactiveFormsModule
 } from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
 import {AccountService} from "../../services/account.service";
+
 import {CommonModule} from '@angular/common';
-import {SponsorResponse} from '../../types/sponsorResonse';
+import {SponsorDetails} from '../../types/sponsorDetails';
+import {PersonService} from '../../services/person.service';
 
 function passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
   const pass = group.get("password")?.value;
@@ -27,63 +30,63 @@ function passwordMatchValidator(group: AbstractControl): ValidationErrors | null
     CommonModule
   ]
 })
-
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   form: FormGroup;
   sponsorId: string | null = null;
   sponsorName: string | null = null;
-
   showPassword = false;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private personService: PersonService,
     private accountService: AccountService
   ) {
-    // --- Formularz ---
-    this.form = this.fb.group(
-      {
-        firstName: ["", [Validators.required, Validators.maxLength(40)]],
-        lastName: ["", [Validators.required, Validators.maxLength(60)]],
-        email: ["", [Validators.required, Validators.email]],
-        password: ["", [Validators.required, Validators.minLength(8)]],
-        confirmPassword: ["", Validators.required],
-        street: [""],
-        buildingNumber: [""],
-        postalCode: ["", [Validators.pattern(/^\d{2}-\d{3}$/)]],
-        city: [""],
-        acceptTerms: [false, [Validators.requiredTrue]],
-      },
-      {validators: passwordMatchValidator}
-    );
+    this.form = this.fb.group({
+      name: ["", [Validators.required, Validators.maxLength(40)]],
+      surname: ["", [Validators.required, Validators.maxLength(60)]],
+      email: ["", [Validators.required, Validators.email]],
+      password: ["", [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ["", Validators.required],
+      phoneNumber: ["", [Validators.required, Validators.minLength(9)]],
 
-    // --- Pobieranie reflinku z URL ---
-    this.route.queryParams.subscribe((params) => {
-      const ref = params["ref"];
+      street: [""],
+      houseNumber: [""],
+      flatNumber: [""],
+      postalCode: ["", [Validators.pattern(/^\d{2}-\d{3}$/)]],
+      city: [""],
+      acceptTerms: [false, [Validators.requiredTrue]]
+    }, {validators: passwordMatchValidator});
+  }
+
+  sponsor: SponsorDetails | null = null;
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const ref = params['ref'];
       if (ref) {
         this.loadSponsor(ref);
       }
     });
   }
 
-  // Pobranie sponsora z backendu
   loadSponsor(ref: string) {
-    this.accountService.getSponsorByRef(ref).subscribe({
-      next: (sponsor: SponsorResponse) => {
-        this.sponsorId = sponsor.sponsorId;
-        this.sponsorName = sponsor.sponsorName;
+    this.personService.getSponsorByRef(ref).subscribe({
+      next: (sponsor: SponsorDetails) => {
+        this.sponsor = sponsor;
+        this.sponsorId = sponsor.id;
       },
       error: () => {
+        this.sponsor = null;
         this.sponsorId = null;
-        this.sponsorName = null;
-      },
+      }
     });
   }
 
-  get f(): any {
+
+  get f() {
     return this.form.controls;
   }
-
 
   togglePassword() {
     this.showPassword = !this.showPassword;
@@ -96,25 +99,24 @@ export class RegisterComponent {
     }
 
     const payload = {
-      SponsorId: this.sponsorId ?  // jeśli sponsorId jest Guid
-      name: this.form.value.firstName,
-      surname: this.form.value.lastName,
+      sponsorId: this.sponsorId,
+      name: this.form.value.name,
+      surname: this.form.value.surname,
       email: this.form.value.email,
       password: this.form.value.password,
-      phoneNumber: this.form.value.phoneNumber || '', // dodaj pole w formularzu
+      phoneNumber: this.form.value.phoneNumber,
       address: {
         street: this.form.value.street,
         city: this.form.value.city,
         houseNumber: this.form.value.houseNumber,
-        flatNumber:this.form.value.flatNumber,
-        zip: this.form.value.postalCode,
+        flatNumber: this.form.value.flatNumber,
+        zip: this.form.value.postalCode
       }
     };
 
-
     this.accountService.register(payload).subscribe({
       next: () => alert("Rejestracja udana!"),
-      error: () => alert("Błąd przy rejestracji."),
+      error: () => alert("Błąd przy rejestracji.")
     });
   }
 }

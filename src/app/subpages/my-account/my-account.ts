@@ -28,7 +28,7 @@ export class MyAccountComponent implements OnInit {
         this.user = data;
 
         // Twój link polecający (np. domena/link)
-        this.referralLink = `https://BelleRose.pl/${this.user.id}`;
+        this.referralLink = `http://localhost:4200/register/${this.user.id}`;
       },
       error: () => {
         console.error("Nie udało się pobrać danych.");

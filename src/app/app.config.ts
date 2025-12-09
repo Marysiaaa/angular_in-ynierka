@@ -16,6 +16,7 @@ import {provideHttpClient} from '@angular/common/http';
 import {Products} from './subpages/products/products';
 import {OrdersComponent} from './subpages/orders/orders';
 import {RegisterComponent} from './subpages/registration/register.component';
+import {AddProductForm} from './subpages/add-product-form/add-product-form';
 
 
 const routes: Routes = [
@@ -70,9 +71,18 @@ const routes: Routes = [
   },
 
   {
-    path: "registration",
+    path: "register",
     component: RegisterComponent,
+  },
+  {
+    path: "register/:ref",
+    component: RegisterComponent,
+  },
+  {
+    path: "add-product",
+    component: AddProductForm,
   }
+
 
 
 ];

@@ -1,65 +1,82 @@
 <div class="page-wrap">
-
   <div class="form-shell">
-    <h1>Witaj, jest nam niezmiernie miło, że postanowiłeś dołączyć do grona naszych Partnerów Biznesowych.</h1>
+    <h1>
+      Witaj, jest nam niezmiernie miło, że postanowiłeś dołączyć do grona naszych Partnerów Biznesowych.
+    </h1>
 
     <div class="card">
       <h2 class="card-title">Dane dotyczące konta</h2>
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
 
+        <!-- Imię -->
         <div class="row">
           <label>Imię
-            <input type="text" formControlName="firstName" />
+            <input type="text" formControlName="name" />
           </label>
-          <div class="error" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
-            <small *ngIf="form.get('firstName')?.errors?.['required']">Imię jest wymagane.</small>
+          <div class="error" *ngIf="f['name'].touched && f['name'].invalid">
+            <small *ngIf="f['name'].errors?.['required']">Imię jest wymagane.</small>
           </div>
         </div>
 
+        <!-- Nazwisko -->
         <div class="row">
           <label>Nazwisko
-            <input type="text" formControlName="lastName" />
+            <input type="text" formControlName="surname" />
           </label>
-          <div class="error" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
-            <small *ngIf="form.get('lastName')?.errors?.['required']">Nazwisko jest wymagane.</small>
+          <div class="error" *ngIf="f['surname'].touched && f['surname'].invalid">
+            <small *ngIf="f['surname'].errors?.['required']">Nazwisko jest wymagane.</small>
           </div>
         </div>
 
+        <!-- Email -->
         <div class="row">
           <label>E-mail
             <input type="email" formControlName="email" />
           </label>
-          <div class="error" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-            <small *ngIf="form.get('email')?.errors?.['required']">Email jest wymagany.</small>
-            <small *ngIf="form.get('email')?.errors?.['email']">Nieprawidłowy email.</small>
+          <div class="error" *ngIf="f['email'].touched && f['email'].invalid">
+            <small *ngIf="f['email'].errors?.['required']">Email jest wymagany.</small>
+            <small *ngIf="f['email'].errors?.['email']">Nieprawidłowy format email.</small>
           </div>
         </div>
 
+        <!-- Telefon -->
+        <div class="row">
+          <label>Numer telefonu
+            <input type="tel" formControlName="phoneNumber" />
+          </label>
+          <div class="error" *ngIf="f['phoneNumber'].touched && f['phoneNumber'].invalid">
+            <small *ngIf="f['phoneNumber'].errors?.['minlength']">Minimum 9 cyfr.</small>
+          </div>
+        </div>
+
+        <!-- Hasło -->
         <div class="row password-row">
           <label>Hasło
             <div class="password-field">
               <input [type]="showPassword ? 'text' : 'password'" formControlName="password" />
-              <button type="button" class="eye" (click)="togglePassword()" [attr.aria-pressed]="showPassword">
+              <button type="button" class="eye" (click)="togglePassword()">
                 {{ showPassword ? 'Ukryj' : 'Pokaż' }}
               </button>
             </div>
           </label>
-          <div class="error" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
-            <small *ngIf="form.get('password')?.errors?.['required']">Hasło jest wymagane.</small>
-            <small *ngIf="form.get('password')?.errors?.['minlength']">Minimum 8 znaków.</small>
+          <div class="error" *ngIf="f['password'].touched && f['password'].invalid">
+            <small *ngIf="f['password'].errors?.['required']">Hasło jest wymagane.</small>
+            <small *ngIf="f['password'].errors?.['minlength']">Minimum 8 znaków.</small>
           </div>
         </div>
 
+        <!-- Potwierdzenie hasła -->
         <div class="row">
           <label>Potwierdź hasło
             <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword" />
           </label>
-          <div class="error" *ngIf="form.errors?.['passwordMismatch'] && (form.get('confirmPassword')?.touched || form.get('password')?.touched)">
+          <div class="error" *ngIf="form.errors?.['passwordMismatch'] && (f['confirmPassword'].touched || f['password'].touched)">
             <small>Hasła nie są zgodne.</small>
           </div>
         </div>
 
+        <!-- Adres: Ulica + Nr budynku -->
         <div class="two-cols">
           <div>
             <label>Ulica
@@ -68,44 +85,56 @@
           </div>
           <div>
             <label>Numer budynku
-              <input type="text" formControlName="buildingNumber" />
+              <input type="text" formControlName="houseNumber" />
             </label>
           </div>
         </div>
 
+        <!-- Adres: Nr lokalu + Kod pocztowy -->
         <div class="two-cols">
+          <div>
+            <label>Numer lokalu
+              <input type="text" formControlName="flatNumber" />
+            </label>
+          </div>
           <div>
             <label>Kod pocztowy
               <input type="text" formControlName="postalCode" />
             </label>
-            <div class="error" *ngIf="form.get('postalCode')?.touched && form.get('postalCode')?.invalid">
-              <small *ngIf="form.get('postalCode')?.errors?.['pattern']">Format: 00-000</small>
+            <div class="error" *ngIf="f['postalCode'].touched && f['postalCode'].invalid">
+              <small *ngIf="f['postalCode'].errors?.['pattern']">Format: 00-000</small>
             </div>
-          </div>
-          <div>
-            <label>Miasto
-              <input type="text" formControlName="city" />
-            </label>
           </div>
         </div>
 
+        <!-- Miasto -->
+        <div class="row">
+          <label>Miasto
+            <input type="text" formControlName="city" />
+          </label>
+        </div>
+
+        <!-- Regulamin -->
         <div class="checkbox-row">
           <label class="checkbox">
             <input type="checkbox" formControlName="acceptTerms" />
-            Akceptuję Regulamin Belle rosse
+            Akceptuję Regulamin Belle Rosse
           </label>
-          <div class="error" *ngIf="form.get('acceptTerms')?.touched && form.get('acceptTerms')?.invalid">
+          <div class="error" *ngIf="f['acceptTerms'].touched && f['acceptTerms'].invalid">
             <small>Musisz zaakceptować regulamin.</small>
           </div>
         </div>
 
-        <div *ngIf="sponsorName" class="info-sponsor">
-          Rejestrujesz się z polecenia: <strong>{{ sponsorName }}</strong>
+        <!-- Sponsor -->
+        <div *ngIf="sponsor" class="info-sponsor">
+          Rejestrujesz się z polecenia:
+          <strong>{{ sponsor.name }} {{ sponsor.surname }}</strong>
         </div>
-
+        <!-- Submit -->
         <div class="submit-row">
           <button type="submit" [disabled]="form.invalid">Potwierdź</button>
         </div>
+
       </form>
     </div>
   </div>

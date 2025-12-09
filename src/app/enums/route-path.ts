@@ -13,6 +13,6 @@ export enum RoutePath {
   BASKET = "/basket",
   ORDERS = "/orders",
   PRODUCTS = "/products",
-  REGISTRATION = "/registration",
+  REGISTRATION = "/register",
 
 }

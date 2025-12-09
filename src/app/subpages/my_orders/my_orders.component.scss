@@ -1,4 +1,3 @@
-/* Ogólny nagłówek */
 h1 {
   font-family: 'Arial', sans-serif;
   font-size: 28px;
@@ -6,8 +5,6 @@ h1 {
   margin-bottom: 20px;
   color: #333;
 }
-
-/* Wrapper tabeli */
 .orders-wrapper {
   background-color: #fff;
   padding: 20px;
@@ -15,8 +12,6 @@ h1 {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   overflow-x: auto;
 }
-
-/* Tabela */
 table {
   width: 100%;
   border-collapse: separate;
@@ -24,7 +19,6 @@ table {
   font-family: 'Arial', sans-serif;
 }
 
-/* Nagłówki tabeli */
 th {
   text-align: left;
   padding: 12px 15px;
@@ -33,15 +27,12 @@ th {
   color: #555;
   border-bottom: 2px solid #e0e0e0;
 }
-
-/* Komórki tabeli */
 td {
   padding: 12px 15px;
   border-bottom: 1px solid #f0f0f0;
   color: #555;
 }
 
-/* Wiersze tabeli */
 tr:nth-child(even) {
   background-color: #fafafa;
 }
@@ -60,8 +51,8 @@ td .status {
   font-size: 12px;
   font-weight: 600;
   text-align: center;
+  color: #fff;
 }
-
 
 .status.in-progress {
   background-color: #f0ad4e; /* pomarańczowy */
@@ -133,7 +124,6 @@ th.mat-sort-header-sorted {
   }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   table, th, td {
     font-size: 14px;

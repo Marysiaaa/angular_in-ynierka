@@ -17,13 +17,14 @@ import {CommonModule} from '@angular/common';
 export class LoginComponent {
   email = '';
   password = '';
-  //error = '';
+  error = '';
   constructor(private auth: AuthService, private router: Router) {}
+
   onSubmit(){
    console.log(this.email);
     this.auth.login(this.email, this.password).subscribe({
       next: () => this.router.navigate(['/home']),
-     // error: (err) => this.error = "Podałeś niepoprawny login lub hasło"
+      error: (err) => this.error = "Podałeś niepoprawny login lub hasło"
     });
   }
 }

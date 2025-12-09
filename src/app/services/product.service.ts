@@ -24,4 +24,23 @@ export class ProductService {
     return this.http.get<Product[]>(`${this.apiUrl}/api/Products`, {headers});
   };
 
+  deleteProduct(id: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this.http.delete(`${this.apiUrl}/api/products/${id}` ,{headers});
+  }
+  addProduct(product: any): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.post(`${this.apiUrl}/api/Products`, product, { headers });
+  }
+
 }
+
+
+

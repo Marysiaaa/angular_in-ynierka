@@ -4,14 +4,14 @@ import {MatTableDataSource, MatTableModule} from "@angular/material/table";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {RoutePath} from "../../enums/route-path";
 import {take} from "rxjs";
-import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {ProductService} from '../../services/product.service';
 import {Product} from '../../types/product';
+import {Router} from '@angular/router';
 
 @Component({
-  selector: "cp-orders",
+  selector: "cp-products",
   imports: [
     MatTableModule,
     MatSortModule,
@@ -26,21 +26,15 @@ export class Products implements AfterViewInit {
   protected readonly matSort!: MatSort;
   protected readonly displayedColumns: string[] = ["ProductId", "NameProduct", "PriceProduct", "QuantityProduct", "Category"];
   protected readonly dataSource: MatTableDataSource<Product> = new MatTableDataSource<Product>();
-  protected readonly RoutePath: typeof RoutePath = RoutePath;
 
   private readonly _productService: ProductService = inject(ProductService);
   private readonly _liveAnnouncer: LiveAnnouncer = inject(LiveAnnouncer);
 
 
-  constructor() {
-    this._productService
-      .getAll()
-      .pipe(take(1), takeUntilDestroyed())
-      .subscribe((data: Product[]): void => {
-        console.log('Ladowanie danych')
-        console.log(data);
-        this.dataSource.data = data;
-      });
+  constructor( private router: Router
+  ) {
+    this.loadProducts();
+
   }
   ngAfterViewInit(): void {
     this.dataSource.sort = this.matSort;
@@ -49,6 +43,28 @@ export class Products implements AfterViewInit {
   protected async announceSortChange(): Promise<void> {
     await this._liveAnnouncer.announce("Zmieniono sortowanie produktów");
   }
+  private loadProducts() {
+    this._productService
+      .getAll()
+      .subscribe((data: Product[]): void => {
+        console.log('Ladowanie danych')
+        console.log(data);
+        this.dataSource.data = data;
+      });
+  }
+  deleteProduct(id: string) {
+    if(!confirm("Czy na pewno chcesz usunąć ten produkt?")) return;
+
+    this._productService.deleteProduct(id)
+      .pipe(take(1))
+      .subscribe(() => {
+        alert("Produkt usunięty!");
+        this.loadProducts();
+      }, () => alert("Błąd przy usuwaniu produktu"));
+  }
 
 
+  openAddProduct() {
+    this.router.navigate(['/add-product']);
+  }
 }

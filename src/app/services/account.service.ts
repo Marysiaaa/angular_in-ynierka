@@ -18,9 +18,6 @@ export class AccountService {
     console.log("rejestracja")
     return this.http.post(`${this.apiUrl}/api/Account/register`, data);
   }
-  getSponsorByRef(ref: string) {
-    return this.http.get<any>(`${this.apiUrl}/Account/GetSponsorByRef?ref=${ref}`);
-  }
 
   GetMyAccount(): Observable<User[]> {
     const token = localStorage.getItem('token');

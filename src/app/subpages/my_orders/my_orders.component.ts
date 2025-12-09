@@ -28,21 +28,15 @@ import {MatButtonModule} from "@angular/material/button";
   styleUrls: ["./my_orders.component.scss"]
 })
 export class MyOrdersComponent implements AfterViewInit {
-  @ViewChild(MatSort)
-  protected readonly matSort!: MatSort;
+  @ViewChild(MatSort, { static: false })
+  matSort!: MatSort;
   protected readonly displayedColumns: string[] = ["OrderId", "UserId", "OrderDate", "TotalAmount", "StatusOrder", "PayOrder", "CancelOrder"];
   protected readonly dataSource: MatTableDataSource<Order> = new MatTableDataSource<Order>();
   protected readonly RoutePath: typeof RoutePath = RoutePath;
 
   private readonly _ordersService: OrdersService = inject(OrdersService);
   private readonly _liveAnnouncer: LiveAnnouncer = inject(LiveAnnouncer);
-  showSuccess = false;
-  showError = false;
-  showCancel = false;
-  showPaidOrder = false;
-  showShippedOrder = false;
-  showCanceledOrder = false;
-
+  showPopup = false;
 
   message = "";
 
@@ -71,25 +65,27 @@ export class MyOrdersComponent implements AfterViewInit {
 
   public payOrder(order: Order) {
     if(order.statusOrder==StatusOrder.Canceled) {
-
-      this.showCanceledOrder = true;
+      this.showPopup = true;
       this.message = "Nie możesz opłacić zamówienia, gdyż zostało anulowane. ";
-
     }
     else if(order.statusOrder==StatusOrder.PAID){
-      this.showPaidOrder = true;
+      this.showPopup= true;
       this.message = "Nie możesz opłacić ponownie zamówienia, gdyż zostało już opłacone ";
+    }
+    else if(order.statusOrder==StatusOrder.Delivered){
+      this.showPopup = true;
+      this.message = "Nie możesz opłacić ponownie zamówienia, gdyż zamówienie zostało już dostarczone ";
     }
     else
     this._ordersService.shippOrder(order).pipe(take(1)).subscribe({
       next: () => {
         order.statusOrder = StatusOrder.PAID;
-        this.showSuccess = true;
+        this.showPopup= true;
         this.message = "Zamówienie zostało opłacone!";
 
       },
       error: () => {
-        this.showError = true;
+        this.showPopup = true;
         this.message = "Wystąpił błąd podczas opłacania zamówienia.";
       }
     });
@@ -98,34 +94,26 @@ export class MyOrdersComponent implements AfterViewInit {
   public cancelOrder(order: Order) {
 
     if (order.statusOrder == StatusOrder.PAID) {
-      this.showPaidOrder = true;
+      this.showPopup = true;
       this.message = "Nie możesz anulować zamówienia, gdyż zostało już opłacone ";
     } else if (order.statusOrder == StatusOrder.Shipped) {
-      this.showShippedOrder = true;
+      this.showPopup = true;
       this.message = "Nie możesz anulować zamówienia, gdyż zostało już wysłane do Ciebie ";
     } else
       this._ordersService.deliveredOrder(order).pipe(take(1)).subscribe({
         next: () => {
           order.statusOrder = StatusOrder.Canceled;
-          this.showCancel = true;
+          this.showPopup = true;
           this.message = "Zamówienie zostało anulowane.";
         },
         error: () => {
-          this.showError = true;
+          this.showPopup = true;
           this.message = "Nie udało się anulować zamówienia.";
         }
       });
   }
 
   closePopup() {
-    this.showSuccess = false;
-    this.showError = false;
-    this.showCancel = false;
-    this.showPaidOrder = false;
-    this.showShippedOrder = false;
-    this.showCanceledOrder = false;
-
-
-
+    this.showPopup = false;
   }
 }
