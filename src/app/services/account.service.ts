@@ -19,12 +19,12 @@ export class AccountService {
     return this.http.post(`${this.apiUrl}/api/Account/register`, data);
   }
 
-  GetMyAccount(): Observable<User[]> {
+  GetMyAccount(): Observable<User> {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<User[]>(`${this.apiUrl}/api/account/me`, {headers});
+    return this.http.get<User>(`${this.apiUrl}/api/account/me`, {headers});
   };
 }

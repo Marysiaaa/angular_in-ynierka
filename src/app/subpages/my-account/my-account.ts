@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {AccountService} from '../../services/account.service';
 import {DatePipe, NgIf} from '@angular/common';
+import {User} from '../../types/user';
 
 
 @Component({
@@ -12,7 +13,7 @@ import {DatePipe, NgIf} from '@angular/common';
 })
 export class MyAccountComponent implements OnInit {
 
-  user: any;
+  user!: User;
   referralLink: string = '';
   showPopup = false;
 
@@ -28,7 +29,7 @@ export class MyAccountComponent implements OnInit {
         this.user = data;
 
         // Twój link polecający (np. domena/link)
-        this.referralLink = `http://localhost:4200/register?ref=${this.user.id}`;
+        this.referralLink = `http://localhost:4200/register?ref=${data.id}`;
       },
       error: () => {
         console.error("Nie udało się pobrać danych.");
