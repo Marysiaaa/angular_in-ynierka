@@ -64,6 +64,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const ref = params['ref'];
+      console.log(ref);
       if (ref) {
         this.loadSponsor(ref);
       }
@@ -71,14 +72,17 @@ export class RegisterComponent implements OnInit {
   }
 
   loadSponsor(ref: string) {
+    console.log("rozpoczecie łądaownia sponsora ")
     this.personService.getSponsorByRef(ref).subscribe({
       next: (sponsor: SponsorDetails) => {
         this.sponsor = sponsor;
         this.sponsorId = sponsor.id;
+        console.log(this.sponsor);
       },
       error: () => {
         this.sponsor = null;
         this.sponsorId = null;
+        console.log("error")
       }
     });
   }

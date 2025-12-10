@@ -15,7 +15,7 @@ export class PersonService {
   constructor(private http: HttpClient) {
   }
   getSponsorByRef(ref: string): Observable<SponsorDetails> {
-    return this.http.get<SponsorDetails>(`${this.apiUrl}/Users/GetSponsorByRef?ref=${ref}`);
+    return this.http.get<SponsorDetails>(`${this.apiUrl}/api/Users/GetSponsorByRef?ref=${ref}`);
   }
 
 
