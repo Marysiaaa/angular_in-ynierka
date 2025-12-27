@@ -30,7 +30,7 @@ export class MyAccountComponent implements OnInit {
         console.log(data);
         this.user = data;
 
-        this.referralLink = `${environment.apiUrl}/register?ref=${data.id}`;
+        this.referralLink = `${window.location.origin}/register?ref=${data.id}`;
       },
       error: () => {
         console.error("Nie udało się pobrać danych.");
