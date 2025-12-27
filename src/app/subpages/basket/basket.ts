@@ -7,6 +7,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {Router} from '@angular/router';
 import {BasketService} from '../../services/basket.service';
+import {environment} from '../../../environment';
 
 
 @Component({
@@ -93,7 +94,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
   errorPopup = false;
 
   zlozZamowienie() {
-    const basketId = this.basketService.getBasketId(); // <-- pobierz id koszyka
+    const basketId = this.basketService.getBasketId();
     if (!basketId) {
       alert('Nie znaleziono koszyka!');
       return;
@@ -106,7 +107,7 @@ export class BasketComponent implements OnInit, AfterViewInit {
 
     const token = localStorage.getItem('token');
 
-    fetch(`http://localhost:5031/api/orders`, {
+    fetch(`${environment.apiUrl}/api/orders`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

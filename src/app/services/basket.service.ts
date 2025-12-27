@@ -10,7 +10,7 @@ import {environment} from '../../environment';
 })
 export class BasketService {
   private apiUrl: string = environment.apiUrl;
-  private basketId: string | undefined;  // <- tutaj podaj swój koszyk
+  private basketId: string | undefined;
   private basketItems = new BehaviorSubject<BasketProduct[]>([]);
   basketItems$ = this.basketItems.asObservable();
 

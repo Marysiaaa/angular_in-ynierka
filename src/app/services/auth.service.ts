@@ -23,7 +23,6 @@ export class AuthService {
       tap((response: any) => {
         if (response?.token) {
           localStorage.setItem('token', response.token);
-          // ... existing code ...
           this.isAuthenticated.set(true);
         }
       })
