@@ -1,3 +1,3 @@
 export const environment  = {
-  apiUrl: 'http://localhost:5031'
+  apiUrl: 'https://bellerosse-bbf0geb4g2bycwd7.polandcentral-01.azurewebsites.net'
 }
