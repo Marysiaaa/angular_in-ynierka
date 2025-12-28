@@ -39,9 +39,23 @@ export class MyAccountComponent implements OnInit {
   }
 
   copyReferralLink() {
-    navigator.clipboard.writeText(this.referralLink).then(() => {
-      this.showPopup = true;
-    });
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(this.referralLink).then(() => {
+        this.showPopup = true;
+      });
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = this.referralLink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        this.showPopup = true;
+      } catch (err) {
+        console.error('Fallback: Nie można skopiować linku', err);
+      }
+      document.body.removeChild(textArea);
+    }
   }
 
   closePopup() {
