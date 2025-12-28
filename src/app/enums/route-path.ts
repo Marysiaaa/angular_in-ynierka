@@ -13,5 +13,7 @@ export enum RoutePath {
   ORDERS = "/orders",
   PRODUCTS = "/products",
   REGISTRATION = "/register",
+  ALLUSERS = "/all-users",
+
 
 }

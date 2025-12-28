@@ -21,7 +21,7 @@ function passwordMatchValidator(group: AbstractControl): ValidationErrors | null
 }
 
 @Component({
-  selector: 'app-registration',
+  selector: 'cp-registration',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
   standalone: true,

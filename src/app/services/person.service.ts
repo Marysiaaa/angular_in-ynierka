@@ -28,4 +28,13 @@ export class PersonService {
     return this.http.get<User[]>(`${this.apiUrl}/api/Users/users`, {headers});
   };
 
+  GetAllUsers(): Observable<User[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this.http.get<User[]>(`${this.apiUrl}/api/Users/Allusers`, {headers});
+  };
+
 }

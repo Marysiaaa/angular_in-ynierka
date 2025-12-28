@@ -17,6 +17,7 @@ import {OrdersComponent} from './subpages/orders/orders';
 import {RegisterComponent} from './subpages/registration/register.component';
 import {AddProductForm} from './subpages/add-product-form/add-product-form';
 import {AuthGuard} from './guards/auth.guard';
+import {AllUsersComponent} from './subpages/all-users/all-users.component';
 
 
 const routes: Routes = [
@@ -86,6 +87,11 @@ const routes: Routes = [
   {
     path: "add-product",
     component: AddProductForm,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "all-users",
+    component: AllUsersComponent,
     canActivate: [AuthGuard]
   }
 

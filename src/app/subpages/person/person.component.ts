@@ -21,7 +21,6 @@ export class PersonComponent implements AfterViewInit {
   protected readonly matSort!: MatSort;
   protected readonly displayedColumns: string[] = ["UserId", "Name","Surname","Email","PhoneNumber","Role","RegistrationDate"];
   protected readonly dataSource: MatTableDataSource<User> = new MatTableDataSource<User>();
-  protected readonly RoutePath: typeof RoutePath = RoutePath;
 
   private readonly _personService: PersonService = inject(PersonService);
   private readonly _liveAnnouncer: LiveAnnouncer = inject(LiveAnnouncer);
