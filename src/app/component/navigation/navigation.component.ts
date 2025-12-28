@@ -10,7 +10,7 @@ import {NgIf} from '@angular/common';
 
 @Component({
   selector: "cp-navigation",
-  imports: [MatIconModule, RouterLink, IfAuthenticatedDirective, NgIf],
+  imports: [MatIconModule, RouterLink, IfAuthenticatedDirective, NgIf, MatButton],
   templateUrl: "./navigation.component.html",
   styleUrl: "./navigation.component.scss"
 })

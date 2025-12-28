@@ -54,15 +54,6 @@ export class AuthService {
     return tokenPayload.isAdmin === 'True'
   }
 
-  private extractUserIdFromToken(token: string): string | null {
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return payload.sub || null;
-    } catch (error) {
-      console.error('Error decoding JWT token:', error);
-      return null;
-    }
-  }
 }
 
 

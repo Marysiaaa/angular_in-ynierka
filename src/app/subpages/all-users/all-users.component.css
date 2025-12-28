@@ -6,7 +6,7 @@ h1 {
   color: #333;
 }
 
-.people-wrapper {
+.users-wrapper {
   background-color: #fff;
   padding: 20px;
   border-radius: 15px;
@@ -53,8 +53,5 @@ th.mat-sort-header-sorted {
 @media (max-width: 768px) {
   table, th, td {
     font-size: 14px;
-  }
-  .orders-wrapper {
-    padding: 15px;
   }
 }

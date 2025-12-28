@@ -1,0 +1,5 @@
+{
+    "appService.showBuildDuringDeployPrompt": false,
+    "appService.defaultWebAppToDeploy": "/subscriptions/745abc5a-0bd5-486b-9360-0b4bc8eb96d9/resourceGroups/praca_inzynierska/providers/Microsoft.Web/sites/belleRosseClient2",
+    "appService.deploySubpath": "dist\\inzynierka"
+}

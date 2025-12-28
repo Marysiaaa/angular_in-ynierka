@@ -34,7 +34,7 @@ export class PersonService {
       'Authorization': `Bearer ${token}`
     });
 
-    return this.http.get<User[]>(`${this.apiUrl}/api/Users/Allusers`, {headers});
+    return this.http.get<User[]>(`${this.apiUrl}/api/Users/AllUsers`, {headers});
   };
 
 }

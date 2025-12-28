@@ -130,7 +130,5 @@ export class RegisterComponent implements OnInit {
     this.showPopup = false;
     this.router.navigate(['/login/login']);
   }
-  closePopup() {
-    this.showPopup = false;
-  }
+
 }
